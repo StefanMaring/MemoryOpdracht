@@ -124,7 +124,7 @@
             Text=""
             VerticalAlignment="Top"
             Width="120"
-            Height="25"
+            Height="20"
             BorderThickness="1"
             BorderBrush="LightGray" 
             />
@@ -135,7 +135,7 @@
             Margin="0,100,0,0" 
             VerticalAlignment="Top" 
             Width="120" 
-            Height="25"
+            Height="30"
             Background="DeepSkyBlue" 
             Foreground="White" 
             FontWeight="Bold"

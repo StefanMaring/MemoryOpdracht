@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace MemoryUI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private int amountOfCards;
@@ -31,8 +28,59 @@ namespace MemoryUI
         public MainWindow(int amountOfCards)
         {
             AmountOfCards = amountOfCards;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            RenderCards();
+
             InitializeComponent();
-            Amount.Text = $"{amountOfCards}";
+        }
+
+        public void RenderCards()
+        {
+            int amount = AmountOfCards;
+            int colCount = amount / 2;
+            int rowCount = amount / 2;
+
+            int height = 50;
+            int width = 50;
+
+            Grid grid = new Grid();
+
+            for(int i = 0; i < colCount; i++)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+
+            for(int i = 0; i < rowCount; i++)
+            {
+                grid.RowDefinitions.Add(new RowDefinition());
+            }
+
+            foreach (var g in grid.RowDefinitions)
+            {
+                g.Height = new GridLength(height);
+            }
+
+            foreach (var g in grid.ColumnDefinitions)
+            {
+                g.Width = new GridLength(width);
+            }
+
+            for(int i = 0; i < rowCount;)
+            {
+                for(int j = 0; j < colCount; j++)
+                {
+                    int idx = grid.Children.Add(new Rectangle());
+                    Rectangle x = grid.Children[idx] as Rectangle;
+
+                    x.Fill = new SolidColorBrush(Colors.Blue);
+                    x.SetValue(Grid.RowProperty, i);
+                    x.SetValue(Grid.ColumnProperty, j);
+                }
+                i++;
+            }
+
+            AddChild(grid);
         }
     }
 }

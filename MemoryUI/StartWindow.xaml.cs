@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace MemoryUI
 {
-    /// <summary>
-    /// Interaction logic for StartWindow.xaml
-    /// </summary>
     public partial class StartWindow : Window
     {
         public StartWindow()
@@ -26,13 +23,26 @@ namespace MemoryUI
         }
 
         private void StartGameEvent(object sender, RoutedEventArgs e)
-
         {
-            int cardAmount = int.Parse(amountOfCards.Text);
-            MainWindow mw = new MainWindow(cardAmount);
+            try
+            {
+                int cardAmount = int.Parse(amountOfCards.Text);
 
-            mw.Show();
-            this.Close();
+                if (cardAmount % 2 == 0)
+                {
+                    MainWindow mw = new MainWindow(cardAmount);
+
+                    mw.Show();
+                    this.Close();
+                }
+                else
+                {
+                    amountOfCards.Text = "Fout!";
+                }
+            } catch (FormatException)
+            {
+                amountOfCards.Text = "Alleen getallen!";
+            }
         }
     }
-}s
+}

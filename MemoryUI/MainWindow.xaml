@@ -5,21 +5,5 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MemoryUI"
         mc:Ignorable="d"
-        Title="Memory" Height="800" Width="800" WindowState="Maximized">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
-        <Rectangle Grid.Row="0" Grid.Column="0" Fill="Blue" />
-        <Rectangle Grid.Row="0" Grid.Column="1" Fill="Red" />
-        <Rectangle Grid.Row="1" Grid.Column="2" Fill="blue" />
-        <Rectangle Grid.Row="1" Grid.Column="0" Fill="red" />
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="" Name="Amount"/>
-    </Grid>
+        Title="Memory" Height="800" Width="800">
 </Window>
