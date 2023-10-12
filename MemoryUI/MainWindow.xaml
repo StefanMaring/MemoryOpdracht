@@ -14,11 +14,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="0" Grid.Column="0" Fill="Blue" />
         <Rectangle Grid.Row="0" Grid.Column="1" Fill="Red" />
         <Rectangle Grid.Row="1" Grid.Column="2" Fill="blue" />
         <Rectangle Grid.Row="1" Grid.Column="0" Fill="red" />
-        
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="" Name="Amount"/>
     </Grid>
 </Window>

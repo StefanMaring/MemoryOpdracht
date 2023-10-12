@@ -20,9 +20,19 @@ namespace MemoryUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private int amountOfCards;
+        public int AmountOfCards { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public MainWindow(int amountOfCards)
+        {
+            AmountOfCards = amountOfCards;
+            InitializeComponent();
+            Amount.Text = $"{amountOfCards}";
         }
     }
 }

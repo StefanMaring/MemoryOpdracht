@@ -21,7 +21,18 @@ namespace MemoryUI
     {
         public StartWindow()
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
         }
+
+        private void StartGameEvent(object sender, RoutedEventArgs e)
+
+        {
+            int cardAmount = int.Parse(amountOfCards.Text);
+            MainWindow mw = new MainWindow(cardAmount);
+
+            mw.Show();
+            this.Close();
+        }
     }
-}
+}s
