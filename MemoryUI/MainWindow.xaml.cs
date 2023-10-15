@@ -20,6 +20,12 @@ namespace MemoryUI
         private int amountOfCards;
         public int AmountOfCards { get; set; }
 
+        private List<string> icons = new List<string>()
+        {
+            "#", "#", "$", "$", "X", "X", "&", "&",
+            "@", "@", "!", "!", "%", "%", "*", "*"
+        };
+
         public MainWindow(int amountOfCards)
         {
             AmountOfCards = amountOfCards;
@@ -56,12 +62,14 @@ namespace MemoryUI
             {
                 for (int col = 0; col < colCount; col++)
                 {
-                    Rectangle card = new Rectangle();                    
+                    Border card = new Border();                    
                     card.Height = cardHeight;
                     card.Width = cardWidth;
-                    card.Fill = new SolidColorBrush(Colors.Blue);
+                    card.Background = new SolidColorBrush(Colors.Blue);
                     card.Margin = new Thickness(10,10,10,10);
                     card.Cursor = Cursors.Hand;
+                    card.Child = AssignIconToCard();
+
                     grid.Children.Add(card);
                     Grid.SetRow(card, row);
                     Grid.SetColumn(card, col); 
@@ -69,6 +77,24 @@ namespace MemoryUI
             }
 
             AddChild(grid);
+        }
+
+        private TextBlock AssignIconToCard()
+        {
+            TextBlock icon = new TextBlock();
+            Random random = new Random();
+
+            int iconNumber = random.Next(icons.Count);
+
+            icon.VerticalAlignment = VerticalAlignment.Center;
+            icon.HorizontalAlignment = HorizontalAlignment.Center;
+            icon.Foreground = new SolidColorBrush(Colors.White);
+            icon.FontSize = 42;
+            icon.Text = icons[iconNumber];
+
+            icons.RemoveAt(iconNumber);
+
+            return icon;
         }
     }
 }
