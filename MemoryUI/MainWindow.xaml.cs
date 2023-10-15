@@ -69,6 +69,8 @@ namespace MemoryUI
                     card.Margin = new Thickness(10,10,10,10);
                     card.Cursor = Cursors.Hand;
                     card.Child = AssignIconToCard();
+                    card.Name = $"card_{row}_{col}";
+                    card.MouseLeftButtonDown += CardClicked; //event
 
                     grid.Children.Add(card);
                     Grid.SetRow(card, row);
@@ -77,7 +79,7 @@ namespace MemoryUI
             }
 
             AddChild(grid);
-        }
+        }       
 
         private TextBlock AssignIconToCard()
         {
@@ -90,11 +92,21 @@ namespace MemoryUI
             icon.HorizontalAlignment = HorizontalAlignment.Center;
             icon.Foreground = new SolidColorBrush(Colors.White);
             icon.FontSize = 42;
+            icon.Visibility = Visibility.Hidden;
             icon.Text = icons[iconNumber];
 
             icons.RemoveAt(iconNumber);
 
             return icon;
+        }
+
+        private void CardClicked(object sender, MouseButtonEventArgs e)
+        {
+            Border wasClicked = e.Source as Border;
+            string name = wasClicked.Name;
+
+            var text = wasClicked.Child as TextBlock;
+            text.Visibility = Visibility.Visible;
         }
     }
 }
