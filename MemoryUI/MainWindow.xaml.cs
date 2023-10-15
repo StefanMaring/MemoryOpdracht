@@ -20,64 +20,52 @@ namespace MemoryUI
         private int amountOfCards;
         public int AmountOfCards { get; set; }
 
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-
         public MainWindow(int amountOfCards)
         {
             AmountOfCards = amountOfCards;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            RenderCards();
-
+            RenderCards(AmountOfCards);
             InitializeComponent();
         }
 
-        public void RenderCards()
+        public void RenderCards(int cardAmount)
         {
-            int amount = AmountOfCards;
-            int colCount = amount / 2;
-            int rowCount = amount / 2;
+            int colCount = cardAmount / 2;
+            int rowCount = 2;
 
-            int height = 50;
-            int width = 50;
+            int windowHeightX = 800;
+            int windowHeightY = 800;
+
+            int cardHeight = windowHeightX / rowCount;
+            int cardWidth = windowHeightY / colCount;
 
             Grid grid = new Grid();
 
-            for(int i = 0; i < colCount; i++)
+            for (int i = 0; i < colCount; i++)
             {
                 grid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            for(int i = 0; i < rowCount; i++)
+            for (int i = 0; i < rowCount; i++)
             {
                 grid.RowDefinitions.Add(new RowDefinition());
             }
 
-            foreach (var g in grid.RowDefinitions)
+            for (int i = 0; i < rowCount; i++)
             {
-                g.Height = new GridLength(height);
-            }
-
-            foreach (var g in grid.ColumnDefinitions)
-            {
-                g.Width = new GridLength(width);
-            }
-
-            for(int i = 0; i < rowCount;)
-            {
-                for(int j = 0; j < colCount; j++)
+                for (int j = 0; j < colCount; j++)
                 {
-                    int idx = grid.Children.Add(new Rectangle());
-                    Rectangle x = grid.Children[idx] as Rectangle;
-
+                    Rectangle x = new Rectangle();
                     x.Fill = new SolidColorBrush(Colors.Blue);
-                    x.SetValue(Grid.RowProperty, i);
-                    x.SetValue(Grid.ColumnProperty, j);
+                    x.Height = cardHeight;
+                    x.Width = cardWidth;
+                    x.Margin = new Thickness(10,10,10,10);
+                    x.Cursor = Cursors.Hand;
+                    grid.Children.Add(x);
+                    Grid.SetRow(x, i);
+                    Grid.SetColumn(x, j);
                 }
-                i++;
             }
 
             AddChild(grid);

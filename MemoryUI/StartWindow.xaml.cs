@@ -37,7 +37,7 @@ namespace MemoryUI
                 }
                 else
                 {
-                    amountOfCards.Text = "Fout!";
+                    amountOfCards.Text = "Alleen even getallen!";
                 }
             } catch (FormatException)
             {
