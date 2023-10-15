@@ -29,7 +29,7 @@ namespace MemoryUI
             InitializeComponent();
         }
 
-        public void RenderCards(int cardAmount)
+        private void RenderCards(int cardAmount)
         {
             int colCount = cardAmount / 2;
             int rowCount = 2;
