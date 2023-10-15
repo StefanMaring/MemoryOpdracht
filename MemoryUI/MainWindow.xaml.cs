@@ -52,19 +52,19 @@ namespace MemoryUI
                 grid.RowDefinitions.Add(new RowDefinition());
             }
 
-            for (int i = 0; i < rowCount; i++)
+            for (int row = 0; row < rowCount; row++)
             {
-                for (int j = 0; j < colCount; j++)
+                for (int col = 0; col < colCount; col++)
                 {
-                    Rectangle x = new Rectangle();
-                    x.Fill = new SolidColorBrush(Colors.Blue);
-                    x.Height = cardHeight;
-                    x.Width = cardWidth;
-                    x.Margin = new Thickness(10,10,10,10);
-                    x.Cursor = Cursors.Hand;
-                    grid.Children.Add(x);
-                    Grid.SetRow(x, i);
-                    Grid.SetColumn(x, j);
+                    Rectangle card = new Rectangle();                    
+                    card.Height = cardHeight;
+                    card.Width = cardWidth;
+                    card.Fill = new SolidColorBrush(Colors.Blue);
+                    card.Margin = new Thickness(10,10,10,10);
+                    card.Cursor = Cursors.Hand;
+                    grid.Children.Add(card);
+                    Grid.SetRow(card, row);
+                    Grid.SetColumn(card, col); 
                 }
             }
 
