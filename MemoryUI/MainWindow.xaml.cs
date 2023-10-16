@@ -65,9 +65,10 @@ namespace MemoryUI
                     Card card = new Card(AssignIconToCard());                   
                     card.Height = cardHeight;
                     card.Width = cardWidth;
-                    card.Background = new SolidColorBrush(Colors.Blue);
-                    card.Margin = new Thickness(10,10,10,10);
-                    card.Cursor = Cursors.Hand;
+                    card.Background = new SolidColorBrush(Colors.Blue);                
+                    card.Margin = new Thickness(5,5,5,5);
+                    //card.CornerRadius = new CornerRadius(5);
+                    card.Cursor = Cursors.Hand;                   
                     card.Name = $"card_{row}_{col}";
                     card.MouseLeftButtonDown += CardClicked; //event
 
@@ -99,13 +100,41 @@ namespace MemoryUI
             return icon;
         }
 
+        private Card firstFlipped = null;
+
         private void CardClicked(object sender, MouseButtonEventArgs e)
         {
-            Border wasClicked = e.Source as Border;
-            string name = wasClicked.Name;
+            Card clickedCard = e.Source as Card;
 
-            TextBlock text = wasClicked.Child as TextBlock;
-            text.Visibility = Visibility.Visible;
+            if (clickedCard == null || clickedCard.IsFlipped || firstFlipped == clickedCard)
+            {
+                return;
+            }
+
+            TextBlock clickedCardTxt = clickedCard.Value;
+            clickedCardTxt.Visibility = Visibility.Visible;
+
+            clickedCard.IsFlipped = true;
+
+            if(firstFlipped == null)
+            {
+                firstFlipped = clickedCard;
+            } else
+            {
+                if (firstFlipped.Value.Text == clickedCard.Value.Text) //Check if values of cards match
+                {
+                    firstFlipped = null;
+                    //add reference to MemoryLogic project function that calculates the score...
+                } else
+                {
+                    firstFlipped.Value.Visibility = Visibility.Hidden;
+                    firstFlipped.IsFlipped = false;                   
+
+                    clickedCard.Value.Visibility = Visibility.Hidden;
+                    clickedCard.IsFlipped = false;
+                    firstFlipped = null;
+                }
+            }
         } 
     }
 }

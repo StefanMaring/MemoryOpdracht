@@ -9,9 +9,6 @@ namespace MemoryUI
 {
     public class Card : Border
     {
-        private bool isFlipped;
-        private TextBlock value;
-
         public bool IsFlipped { get; set; }
         public TextBlock Value { get; set; }
 
