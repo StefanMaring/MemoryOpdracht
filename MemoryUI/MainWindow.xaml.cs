@@ -105,8 +105,8 @@ namespace MemoryUI
             Border wasClicked = e.Source as Border;
             string name = wasClicked.Name;
 
-            var text = wasClicked.Child as TextBlock;
+            TextBlock text = wasClicked.Child as TextBlock;
             text.Visibility = Visibility.Visible;
-        }
+        } 
     }
 }
