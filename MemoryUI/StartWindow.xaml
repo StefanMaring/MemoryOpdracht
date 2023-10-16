@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MemoryUI"
         mc:Ignorable="d"
-        Title="Welkom bij Memory" Height="200" Width="400" Background="LightCyan">
+        Title="Welkom bij Memory" Height="200" Width="400" Background="#80ccff">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">

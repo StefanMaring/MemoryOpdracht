@@ -67,7 +67,6 @@ namespace MemoryUI
                     card.Width = cardWidth;
                     card.Background = new SolidColorBrush(Colors.Blue);                
                     card.Margin = new Thickness(5,5,5,5);
-                    //card.CornerRadius = new CornerRadius(5);
                     card.Cursor = Cursors.Hand;                   
                     card.Name = $"card_{row}_{col}";
                     card.MouseLeftButtonDown += CardClicked; //event
@@ -138,3 +137,6 @@ namespace MemoryUI
         } 
     }
 }
+
+//vragen naar gelijke iconen
+//vragen naar kaarten en waarden die verdwijnen
