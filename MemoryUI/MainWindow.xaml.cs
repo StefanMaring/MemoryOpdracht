@@ -105,7 +105,7 @@ namespace MemoryUI
         {
             Card clickedCard = e.Source as Card;
 
-            if (clickedCard == null || clickedCard.IsFlipped || firstFlipped == clickedCard)
+            if (clickedCard.IsFlipped)
             {
                 return;
             }
