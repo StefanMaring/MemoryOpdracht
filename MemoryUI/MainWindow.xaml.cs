@@ -62,13 +62,12 @@ namespace MemoryUI
             {
                 for (int col = 0; col < colCount; col++)
                 {
-                    Border card = new Border();                    
+                    Card card = new Card(AssignIconToCard());                   
                     card.Height = cardHeight;
                     card.Width = cardWidth;
                     card.Background = new SolidColorBrush(Colors.Blue);
                     card.Margin = new Thickness(10,10,10,10);
                     card.Cursor = Cursors.Hand;
-                    card.Child = AssignIconToCard();
                     card.Name = $"card_{row}_{col}";
                     card.MouseLeftButtonDown += CardClicked; //event
 
