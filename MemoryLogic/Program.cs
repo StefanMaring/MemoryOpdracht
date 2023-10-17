@@ -8,8 +8,8 @@
             try
             {
                 int amount = int.Parse(Console.ReadLine());
-                Game MemoryGame = new Game(amount);
-                MemoryGame.PrintCards();
+                Game GameLogic = new Game(amount);
+                GameController MemoryGame = new GameController(GameLogic);
             } catch (FormatException)
             {
                 Console.WriteLine("Alleen getallen zijn toegestaan!");
