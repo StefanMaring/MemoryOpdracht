@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,13 @@ namespace MemoryLogic
     public class GameController
     {
         private Card firstFlippedCard = null;
+        private Card secondFlippedCard = null;
         private bool gameRunning = true;
         private int turnAmount = 0;
         private List<Card> cards;
         private HashSet<Card> matchedCards = new HashSet<Card>();
-     
+        private Stopwatch stopWatch = new Stopwatch();
+
         public GameController(List<Card> cards)
         {
             this.cards = cards;
@@ -24,13 +27,11 @@ namespace MemoryLogic
         {
             while (gameRunning)
             {
+                //stopWatch.Start();
+
                 if (matchedCards.Count == cards.Count)
                 {
-                    gameRunning = false;
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Je hebt succesvol alle kaarten gematched!");
-                    Console.WriteLine($"Score: {turnAmount}");
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    EndOfGame();
                     break;
                 }
 
@@ -49,27 +50,29 @@ namespace MemoryLogic
 
                     if (matchedCards.Contains(enteredCard))
                     {
-                        Console.WriteLine("De kaart is al gematched of omgedraaid!");
+                        Console.WriteLine("De kaart is al gematched!");
                         continue;
                     }
 
-                    if (enteredCard == null || enteredCard.IsFlipped)
+                    if (enteredCard.IsFlipped)
                     {
+                        Console.WriteLine("De kaart is al omgedraaid!");
                         continue;
                     }                    
 
-                    enteredCard.IsFlipped = true;
+                    enteredCard.IsFlipped = true;                   
 
-                    if (firstFlippedCard == null)
+                    if (firstFlippedCard == null) //Checking if cards match or not
                     {
                         firstFlippedCard = enteredCard;
                         Console.WriteLine($"Waarde kaart: {firstFlippedCard.Value}");
                     }
-                    else
-                    {                       
-                        Console.WriteLine($"Waarde kaart: {enteredCard.Value}");
+                    else if(secondFlippedCard == null)
+                    {      
+                        secondFlippedCard = enteredCard;
+                        Console.WriteLine($"Waarde kaart: {secondFlippedCard.Value}");
 
-                        if (firstFlippedCard.Value == enteredCard.Value)
+                        if (firstFlippedCard.Value == secondFlippedCard.Value)
                         {
                             turnAmount++;
 
@@ -78,8 +81,10 @@ namespace MemoryLogic
                             Console.ForegroundColor = ConsoleColor.Gray;
 
                             matchedCards.Add(firstFlippedCard);
-                            matchedCards.Add(enteredCard);
+                            matchedCards.Add(secondFlippedCard);
+
                             firstFlippedCard = null;
+                            secondFlippedCard = null;
                         }
                         else
                         {
@@ -90,8 +95,10 @@ namespace MemoryLogic
                             Console.ForegroundColor = ConsoleColor.Gray;
 
                             firstFlippedCard.IsFlipped = false;                            
-                            enteredCard.IsFlipped = false;
+                            secondFlippedCard.IsFlipped = false;
+
                             firstFlippedCard = null;
+                            secondFlippedCard = null;
                         }
                     }
                 } catch(FormatException)
@@ -99,6 +106,20 @@ namespace MemoryLogic
                     Console.WriteLine("Invoer mag alleen uit getallen bestaan!");
                 }                                
             }
-        }        
+        }  
+        
+        private void EndOfGame()
+        {
+            gameRunning = false;
+            stopWatch.Stop();
+            int elapsedTime = int.Parse(stopWatch.Elapsed.ToString());
+
+            ScoreCalculator sc = new ScoreCalculator(cards.Count, elapsedTime, turnAmount);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Je hebt succesvol alle kaarten gematched!");
+            Console.WriteLine($"Score: {sc.CalculateScore()}");
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
     }
 }
