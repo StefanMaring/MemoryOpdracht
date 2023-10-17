@@ -25,10 +25,9 @@ namespace MemoryLogic
 
         private void GameControls()
         {
+            //stopWatch.Start();
             while (gameRunning)
-            {
-                //stopWatch.Start();
-
+            {             
                 if (matchedCards.Count == cards.Count)
                 {
                     EndOfGame();
@@ -40,85 +39,92 @@ namespace MemoryLogic
                     Console.WriteLine("Geef het getal van de kaart die je wilt draaien:");
                     int pos = int.Parse(Console.ReadLine());
 
-                    if (pos > cards.Count)
+                    try
                     {
-                        Console.WriteLine($"De invoer moet kleiner zijn dan {cards.Count}!");
-                        continue;
-                    }
+                        Card enteredCard = cards[pos - 1];
 
-                    Card enteredCard = cards[pos - 1];
-
-                    if (matchedCards.Contains(enteredCard))
-                    {
-                        Console.WriteLine("De kaart is al gematched!");
-                        continue;
-                    }
-
-                    if (enteredCard.IsFlipped)
-                    {
-                        Console.WriteLine("De kaart is al omgedraaid!");
-                        continue;
-                    }                    
-
-                    enteredCard.IsFlipped = true;                   
-
-                    if (firstFlippedCard == null) //Checking if cards match or not
-                    {
-                        firstFlippedCard = enteredCard;
-                        Console.WriteLine($"Waarde kaart: {firstFlippedCard.Value}");
-                    }
-                    else if(secondFlippedCard == null)
-                    {      
-                        secondFlippedCard = enteredCard;
-                        Console.WriteLine($"Waarde kaart: {secondFlippedCard.Value}");
-
-                        if (firstFlippedCard.Value == secondFlippedCard.Value)
+                        if (matchedCards.Contains(enteredCard))
                         {
-                            turnAmount++;
-
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("Match!");
-                            Console.ForegroundColor = ConsoleColor.Gray;
-
-                            matchedCards.Add(firstFlippedCard);
-                            matchedCards.Add(secondFlippedCard);
-
-                            firstFlippedCard = null;
-                            secondFlippedCard = null;
+                            Console.WriteLine("De kaart is al gematched!");
+                            continue;
                         }
-                        else
+
+                        if (enteredCard.IsFlipped)
                         {
-                            turnAmount++;
+                            Console.WriteLine("De kaart is al omgedraaid!");
+                            continue;
+                        }
 
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Geen match!");
-                            Console.ForegroundColor = ConsoleColor.Gray;
+                        if (firstFlippedCard == null) //set first card
+                        {
+                            firstFlippedCard = enteredCard;
+                            firstFlippedCard.IsFlipped = true;
+                            Console.WriteLine($"Waarde kaart: {firstFlippedCard.Value}");
+                        }
+                        else if (secondFlippedCard == null) //set second card
+                        {
+                            secondFlippedCard = enteredCard;
+                            secondFlippedCard.IsFlipped = true;
+                            Console.WriteLine($"Waarde kaart: {secondFlippedCard.Value}");
 
-                            firstFlippedCard.IsFlipped = false;                            
-                            secondFlippedCard.IsFlipped = false;
-
-                            firstFlippedCard = null;
-                            secondFlippedCard = null;
+                            CheckIfCardsMatch(firstFlippedCard, secondFlippedCard); //check to see if cards match
                         }
                     }
-                } catch(FormatException)
+                    catch (ArgumentOutOfRangeException) {
+                        Console.WriteLine($"Invoer mag niet groter zijn dan {cards.Count}");
+                    }
+                } 
+                catch(FormatException)
                 {
                     Console.WriteLine("Invoer mag alleen uit getallen bestaan!");
                 }                                
             }
-        }  
+        }
+        
+        private void CheckIfCardsMatch(Card card, Card card2)
+        {
+            if (firstFlippedCard.Value == secondFlippedCard.Value)
+            {
+                turnAmount++;
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Match!");
+                Console.ForegroundColor = ConsoleColor.Gray;
+
+                matchedCards.Add(firstFlippedCard);
+                matchedCards.Add(secondFlippedCard);
+
+                firstFlippedCard = null;
+                secondFlippedCard = null;
+            }
+            else
+            {
+                turnAmount++;
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Geen match!");
+                Console.ForegroundColor = ConsoleColor.Gray;
+
+                firstFlippedCard.IsFlipped = false;
+                secondFlippedCard.IsFlipped = false;
+
+                firstFlippedCard = null;
+                secondFlippedCard = null;
+            }
+        }
         
         private void EndOfGame()
         {
             gameRunning = false;
-            stopWatch.Stop();
-            int elapsedTime = int.Parse(stopWatch.Elapsed.ToString());
+            //stopWatch.Stop();
+            //int elapsedTime = int.Parse(stopWatch.Elapsed.ToString());
 
-            ScoreCalculator sc = new ScoreCalculator(cards.Count, elapsedTime, turnAmount);
+            //ScoreCalculator sc = new ScoreCalculator(cards.Count, elapsedTime, turnAmount);
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Je hebt succesvol alle kaarten gematched!");
-            Console.WriteLine($"Score: {sc.CalculateScore()}");
+            //Console.WriteLine($"Score: {sc.CalculateScore()}");
+            Console.WriteLine($"Score: {turnAmount} (turns)");
             Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
