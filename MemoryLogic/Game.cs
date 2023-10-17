@@ -9,10 +9,8 @@ namespace MemoryLogic
 {
     public class Game
     {
-        private int amountOfCards;
+        private List<Card> gameCards = new List<Card>();
         public int AmountOfCards { get; private set; }
-
-        public List<Card> gameCards = new List<Card>();
 
         public Game(int amountOfCards) {
             DetermineAmountOfCards(amountOfCards);
@@ -113,6 +111,11 @@ namespace MemoryLogic
             {
                 gameCards.Add(new Card(cardValues[i]));
             }
+        }
+
+        public List<Card> GetCards()
+        {
+            return gameCards;
         }
 
         public void PrintCards() //test function

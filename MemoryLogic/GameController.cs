@@ -11,14 +11,12 @@ namespace MemoryLogic
         private Card firstFlippedCard = null;
         private bool gameRunning = true;
         private int turnAmount = 0;
-
-        public Game Game { get; }
-
-        private List<Card> matchedCards = new List<Card>();
-
-        public GameController(Game game)
+        private List<Card> cards;
+        private HashSet<Card> matchedCards = new HashSet<Card>();
+     
+        public GameController(List<Card> cards)
         {
-            Game = game;
+            this.cards = cards;
             GameControl();
         }
 
@@ -31,13 +29,13 @@ namespace MemoryLogic
                     Console.WriteLine("Geef het getal van de kaart die je wilt draaien:");
                     int pos = int.Parse(Console.ReadLine());
 
-                    if (pos > Game.gameCards.Count)
+                    if (pos > cards.Count)
                     {
-                        Console.WriteLine($"De invoer moet kleiner zijn dan {Game.gameCards.Count}");
+                        Console.WriteLine($"De invoer moet kleiner zijn dan {cards.Count}");
                         continue;
                     }
 
-                    Card enteredCard = Game.gameCards[pos - 1];
+                    Card enteredCard = cards[pos - 1];
 
                     if (matchedCards.Contains(enteredCard))
                     {
@@ -55,11 +53,11 @@ namespace MemoryLogic
                     if (firstFlippedCard == null)
                     {
                         firstFlippedCard = enteredCard;
-                        Console.WriteLine($"waarde: {firstFlippedCard.Value}");
+                        Console.WriteLine($"Waarde kaart: {firstFlippedCard.Value}");
                     }
                     else
                     {                       
-                        Console.WriteLine($"waarde: {enteredCard.Value}");
+                        Console.WriteLine($"Waarde kaart: {enteredCard.Value}");
 
                         if (firstFlippedCard.Value == enteredCard.Value)
                         {
