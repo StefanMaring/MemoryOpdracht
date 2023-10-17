@@ -35,8 +35,7 @@ namespace MemoryLogic
 
             if (amountOfCards % 2 != 0)
             {
-                Console.WriteLine("Alleen even getallen zijn toegestaan!");
-                return false;
+                amountOfCards = amountOfCards + 1;
             }                                
 
             switch (amountOfCards)
@@ -111,7 +110,7 @@ namespace MemoryLogic
 
             for(int i = 0; i < amountOfCards; i++)
             {
-                gameCards.Add(new Card(cardValues[i]));
+                gameCards.Add(new Card(cardValues[i],i));
             }
         }
 

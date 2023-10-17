@@ -14,8 +14,7 @@ namespace MemoryLogic
         private bool gameRunning = true;
         private int turnAmount = 0;
         private List<Card> cards;
-        private HashSet<Card> matchedCards = new HashSet<Card>();
-        private Stopwatch stopWatch = new Stopwatch();
+        private HashSet<Card> matchedCards = new HashSet<Card>();        
 
         public GameController(List<Card> cards)
         {
@@ -25,18 +24,20 @@ namespace MemoryLogic
 
         private void GameControls()
         {
-            //stopWatch.Start();
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            
             while (gameRunning)
             {             
                 if (matchedCards.Count == cards.Count)
                 {
-                    EndOfGame();
+                    EndOfGame(stopWatch.Elapsed);
                     break;
                 }
 
                 try
                 {
-                    Console.WriteLine("Geef het getal van de kaart die je wilt draaien:");
+                    Console.WriteLine("Draai kaart:");
                     int pos = int.Parse(Console.ReadLine());
 
                     try
@@ -46,6 +47,7 @@ namespace MemoryLogic
                         if (matchedCards.Contains(enteredCard))
                         {
                             Console.WriteLine("De kaart is al gematched!");
+                            DisplayMatched(); //allows user to see which cards already have been turned
                             continue;
                         }
 
@@ -80,6 +82,7 @@ namespace MemoryLogic
                     Console.WriteLine("Invoer mag alleen uit getallen bestaan!");
                 }                                
             }
+            stopWatch.Stop();
         }
         
         private void CheckIfCardsMatch(Card card, Card card2)
@@ -114,19 +117,27 @@ namespace MemoryLogic
             }
         }
         
-        private void EndOfGame()
+        private void EndOfGame(TimeSpan timeSpan)
         {
-            gameRunning = false;
-            //stopWatch.Stop();
-            //int elapsedTime = int.Parse(stopWatch.Elapsed.ToString());
-
-            //ScoreCalculator sc = new ScoreCalculator(cards.Count, elapsedTime, turnAmount);
+            gameRunning = false;            
+            ScoreCalculator sc = new ScoreCalculator(cards.Count, (int)timeSpan.TotalSeconds, turnAmount);
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Je hebt succesvol alle kaarten gematched!");
-            //Console.WriteLine($"Score: {sc.CalculateScore()}");
-            Console.WriteLine($"Score: {turnAmount} (turns)");
+            Console.WriteLine($"Score: {sc.CalculateScore()}");
             Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        private void DisplayMatched()
+        {
+            if(matchedCards.Count > 0)
+            {
+                Console.WriteLine("Gematchde kaarten: ");
+                foreach (Card card in matchedCards)
+                {
+                    Console.WriteLine($"Kaart {card.Number}");
+                }
+            }          
         }
     }
 }

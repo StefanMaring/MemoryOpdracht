@@ -19,10 +19,11 @@ namespace MemoryLogic
             this.turnAmount = turnAmount;
         }
 
-        public int CalculateScore()
+        public double CalculateScore()
         {
-            int score = ((amountOfCards * 2) / (timeTillCompletion * turnAmount)) * 1000;
-            return score;
+            double score = (Math.Pow(amountOfCards, 2) / (timeTillCompletion * turnAmount) * 1000);
+            double scoreCeil = Math.Ceiling(score);
+            return scoreCeil;
         }
     }
 }
