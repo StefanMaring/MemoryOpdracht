@@ -9,6 +9,7 @@
             {
                 int amount = int.Parse(Console.ReadLine());
                 Game MemoryGame = new Game(amount);
+                MemoryGame.PrintCards();
             } catch (FormatException)
             {
                 Console.WriteLine("Alleen getallen zijn toegestaan!");
