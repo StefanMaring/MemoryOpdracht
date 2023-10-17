@@ -17,10 +17,10 @@ namespace MemoryLogic
         public GameController(List<Card> cards)
         {
             this.cards = cards;
-            GameControl();
+            GameControls();
         }
 
-        private void GameControl()
+        private void GameControls()
         {
             while (gameRunning)
             {
@@ -31,7 +31,7 @@ namespace MemoryLogic
 
                     if (pos > cards.Count)
                     {
-                        Console.WriteLine($"De invoer moet kleiner zijn dan {cards.Count}");
+                        Console.WriteLine($"De invoer moet kleiner zijn dan {cards.Count}!");
                         continue;
                     }
 
