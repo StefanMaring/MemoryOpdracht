@@ -24,6 +24,16 @@ namespace MemoryLogic
         {
             while (gameRunning)
             {
+                if (matchedCards.Count == cards.Count)
+                {
+                    gameRunning = false;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Je hebt succesvol alle kaarten gematched!");
+                    Console.WriteLine($"Score: {turnAmount}");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    break;
+                }
+
                 try
                 {
                     Console.WriteLine("Geef het getal van de kaart die je wilt draaien:");
