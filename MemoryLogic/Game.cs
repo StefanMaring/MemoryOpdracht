@@ -10,59 +10,61 @@ namespace MemoryLogic
     public class Game
     {
         private List<Card> gameCards = new List<Card>();
-        public int AmountOfCards { get; private set; }
+        private int AmountOfCards;
 
         public Game(int amountOfCards) {
-            DetermineAmountOfCards(amountOfCards);
-            CreateCards(AmountOfCards);
+            if(DetermineAmountOfCards(amountOfCards)) {
+                CreateCards(AmountOfCards);
+                RunGame();
+            }            
         }
 
-        public void DetermineAmountOfCards(int amountOfCards)
+        private bool DetermineAmountOfCards(int amountOfCards)
         {
-            if (amountOfCards % 2 != 0)
-            {
-                Console.WriteLine("Alleen even getallen zijn toegestaan!");
-                return;
-            }
-
             if (amountOfCards < 8)
             {
                 Console.WriteLine("Aantal kaarten moet minimaal 8 zijn!");
-                return;
+                return false;
             }
-            
-            if(amountOfCards > 20)
+
+            if (amountOfCards > 20)
             {
                 Console.WriteLine("Aantal kaarten mag maximaal 20 zijn!");
-                return;
-            }           
+                return false;
+            }
+
+            if (amountOfCards % 2 != 0)
+            {
+                Console.WriteLine("Alleen even getallen zijn toegestaan!");
+                return false;
+            }                                
 
             switch (amountOfCards)
             {
                 case 8:
                     AmountOfCards = 8;
-                    break;
+                    return true;
                 case 10:
                     AmountOfCards = 10;
-                    break;
+                    return true;
                 case 12:
                     AmountOfCards = 12;
-                    break;
+                    return true;
                 case 14:
                     AmountOfCards = 14;
-                    break;
+                    return true;
                 case 16:
                     AmountOfCards = 16;
-                    break;
+                    return true;
                 case 18:
                     AmountOfCards = 18;
-                    break;
+                    return true;
                 case 20:
                     AmountOfCards = 20;
-                    break;
+                    return true;
                 default:
                     AmountOfCards = 10;
-                    break;
+                    return true;
             }
         }
 
@@ -113,17 +115,9 @@ namespace MemoryLogic
             }
         }
 
-        public List<Card> GetCards()
+        private void RunGame()
         {
-            return gameCards;
-        }
-
-        public void PrintCards() //test function
-        {
-            foreach (Card item in gameCards)
-            {
-                Console.WriteLine(item.Value);
-            }
+            new GameController(gameCards);
         }
     }
 }

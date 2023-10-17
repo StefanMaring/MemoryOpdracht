@@ -8,10 +8,7 @@
             {
                 Console.WriteLine("Geef aan met hoeveel kaarten je wilt spelen:");
                 int amount = int.Parse(Console.ReadLine());
-
-                Game GameLogic = new Game(amount);
-                GameController MemoryGame = new GameController(GameLogic.GetCards());
-
+                Game MemoryGame = new Game(amount);                
             } catch (FormatException)
             {
                 Console.WriteLine("Alleen getallen zijn toegestaan!");
