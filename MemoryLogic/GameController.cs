@@ -133,7 +133,8 @@ namespace MemoryLogic
             if(matchedCards.Count > 0)
             {
                 Console.WriteLine("Gematchde kaarten: ");
-                foreach (Card card in matchedCards)
+                List<Card> orderedCards = matchedCards.OrderBy(i => i.Number).ToList();
+                foreach (Card card in orderedCards)
                 {
                     Console.WriteLine($"Kaart {card.Number}");
                 }
