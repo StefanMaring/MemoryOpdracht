@@ -59,14 +59,15 @@ namespace MemoryLogic
                         {
                             firstFlippedCard = enteredCard;
                             firstFlippedCard.IsFlipped = true;
+
                             Console.WriteLine($"Waarde kaart: {firstFlippedCard.Value}");
                         }
                         else if (secondFlippedCard == null) //set second card
                         {
                             secondFlippedCard = enteredCard;
                             secondFlippedCard.IsFlipped = true;
-                            Console.WriteLine($"Waarde kaart: {secondFlippedCard.Value}");
 
+                            Console.WriteLine($"Waarde kaart: {secondFlippedCard.Value}");
                             CheckIfCardsMatch(firstFlippedCard, secondFlippedCard); //check to see if cards match
                         }
                     }
