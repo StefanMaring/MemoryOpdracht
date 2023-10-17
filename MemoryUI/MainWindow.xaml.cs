@@ -28,7 +28,25 @@ namespace MemoryUI
 
         public MainWindow(int amountOfCards)
         {
-            AmountOfCards = amountOfCards;
+            switch(amountOfCards) //card icons based on switch
+            {
+                case 8:
+                    AmountOfCards = 8;
+                    break;
+                case 10:
+                    AmountOfCards = 10;
+                    break;
+                case 12:
+                    AmountOfCards = 12;
+                    break;
+                case 14:
+                    AmountOfCards = 14;
+                    break;
+                case 16:
+                    AmountOfCards = 16;
+                break;
+            }              
+
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             RenderCards(AmountOfCards);
@@ -62,7 +80,7 @@ namespace MemoryUI
             {
                 for (int col = 0; col < colCount; col++)
                 {
-                    Card card = new Card(AssignIconToCard());                   
+                    CardUI card = new CardUI(AssignIconToCard());                   
                     card.Height = cardHeight;
                     card.Width = cardWidth;
                     card.Background = new SolidColorBrush(Colors.Blue);                
@@ -99,11 +117,11 @@ namespace MemoryUI
             return icon;
         }
 
-        private Card firstFlipped = null;
+        private CardUI firstFlipped = null;
 
         private void CardClicked(object sender, MouseButtonEventArgs e)
         {
-            Card clickedCard = e.Source as Card;
+            CardUI clickedCard = e.Source as CardUI;
 
             if (clickedCard == null || clickedCard.IsFlipped)
             {
@@ -118,21 +136,18 @@ namespace MemoryUI
             if(firstFlipped == null)
             {
                 firstFlipped = clickedCard;
+            } else if(firstFlipped.Value.Text == clickedCard.Value.Text)
+            {
+                firstFlipped = null;
+                //add reference to MemoryLogic project function that calculates the score...
             } else
             {
-                if (firstFlipped.Value.Text == clickedCard.Value.Text) //Check if values of cards match
-                {
-                    firstFlipped = null;
-                    //add reference to MemoryLogic project function that calculates the score...
-                } else
-                {
-                    firstFlipped.Value.Visibility = Visibility.Hidden;
-                    firstFlipped.IsFlipped = false;                   
+                firstFlipped.Value.Visibility = Visibility.Hidden;
+                firstFlipped.IsFlipped = false;                   
 
-                    clickedCard.Value.Visibility = Visibility.Hidden;
-                    clickedCard.IsFlipped = false;
-                    firstFlipped = null;
-                }
+                clickedCard.Value.Visibility = Visibility.Hidden;
+                clickedCard.IsFlipped = false;
+                firstFlipped = null;
             }
         } 
     }
