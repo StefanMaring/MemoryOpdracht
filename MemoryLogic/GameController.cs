@@ -29,55 +29,40 @@ namespace MemoryLogic
         {
             while (gameRunning)
             {
-                try
+                //try catch
+                Console.WriteLine("Geef het getal van de kaart die je wilt draaien:");
+                firstFlippedNumber = int.Parse(Console.ReadLine());
+                Card enteredCard = Game.gameCards[firstFlippedNumber - 1];
+
+                if (enteredCard == null || enteredCard.IsFlipped)
                 {
-                    Console.WriteLine("Geef het getal van de eerste kaart die je wilt draaien:");
-                    firstFlippedNumber = int.Parse(Console.ReadLine());
+                    return;
+                }             
 
-                    if (firstFlippedCard == null)
-                    {
-                        firstFlippedCard = Game.gameCards[firstFlippedNumber - 1];
-                        firstFlippedCard.IsFlipped = true;
-                        Console.WriteLine($"waarde: {firstFlippedCard.Value}");
-                    }
-
-                    Console.WriteLine("Geef het getal van de tweede kaart die je wilt draaien:");
-                    secondFlippedNumber = int.Parse(Console.ReadLine());
-
-                    if (secondFlippedCard == null)
-                    {
-                        secondFlippedCard = Game.gameCards[secondFlippedNumber - 1];
-                        secondFlippedCard.IsFlipped = true;
-                        Console.WriteLine($"waarde: {secondFlippedCard.Value}");
-                    }
-
-                    if (firstFlippedCard.Equals(secondFlippedCard))
-                    {
-                        Console.WriteLine("Deze kaart is al omgedraaid!");
-                        continue;
-                    } else
-                    {
-                        if (firstFlippedCard.Value == secondFlippedCard.Value)
-                        {
-                            turnAmount++;
-                            Console.WriteLine("Match!");
-                            firstFlippedCard = null;
-                            secondFlippedCard = null;
-                        } else
-                        {
-                            turnAmount++;
-                            Console.WriteLine("Geen match!");
-                            firstFlippedCard.IsFlipped = false;
-                            firstFlippedCard = null;
-
-                            secondFlippedCard.IsFlipped = false;
-                            secondFlippedCard = null;
-                        }
-                    }                   
-                } catch(FormatException)
+                enteredCard.IsFlipped = true;
+                
+                if (firstFlippedCard == null)
                 {
-                    Console.WriteLine("Alleen getallen mogen worden ingevoerd!");
-                }
+                    firstFlippedCard = enteredCard;
+                    Console.WriteLine($"waarde: {firstFlippedCard.Value}");
+                } else
+                {
+                    Console.WriteLine($"waarde: {enteredCard.Value}");
+
+                    if (firstFlippedCard.Value == enteredCard.Value)
+                    {
+                        Console.WriteLine("Match!");
+                        firstFlippedCard = null;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Geen match!");
+                        firstFlippedCard.IsFlipped = false;
+
+                        enteredCard.IsFlipped = false;
+                        firstFlippedCard = null;
+                    }
+                }                 
             }
         }        
     }

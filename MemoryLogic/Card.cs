@@ -10,6 +10,7 @@ namespace MemoryLogic
     {
         public string Value { get; set; }
         public bool IsFlipped { get; set; }
+        public bool HasBeenMatched { get; set; }
 
         public Card(string value) { 
             Value = value;
