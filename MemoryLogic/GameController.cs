@@ -124,7 +124,10 @@ namespace MemoryLogic
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Je hebt succesvol alle kaarten gematched!");
-            Console.WriteLine($"Score: {sc.CalculateScore()}");
+            Console.WriteLine($"Aantal kaarten: {cards.Count}");
+            Console.WriteLine($"Aantal seconden: {(int)timeSpan.TotalSeconds}");
+            Console.WriteLine($"Aantal beurten: {turnAmount}");
+            Console.WriteLine($"Totaal score: {sc.CalculateScore()}");
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 

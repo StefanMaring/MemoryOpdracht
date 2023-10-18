@@ -21,7 +21,7 @@ namespace MemoryLogic
 
         public double CalculateScore()
         {
-            double score = (Math.Pow(amountOfCards, 2) / (timeTillCompletion * turnAmount) * 1000);
+            double score = Math.Pow(amountOfCards, 2) / (timeTillCompletion * turnAmount) * 1000;
             double scoreCeil = Math.Ceiling(score);
             return scoreCeil;
         }
