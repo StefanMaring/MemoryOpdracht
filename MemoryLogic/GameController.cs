@@ -87,7 +87,7 @@ namespace MemoryLogic
         
         private void CheckIfCardsMatch(Card card, Card card2)
         {
-            if (firstFlippedCard.Value == secondFlippedCard.Value)
+            if (card.Value == card2.Value)
             {
                 turnAmount++;
 
