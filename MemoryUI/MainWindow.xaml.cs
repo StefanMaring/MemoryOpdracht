@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -19,9 +20,12 @@ namespace MemoryUI
     public partial class MainWindow : Window
     {
         private int amountOfCards;
-        public int AmountOfCards { get; set; }
-
         private Game game = new Game();
+        private CardUI firstFlipped = null;
+        private CardUI secondFlipped = null;
+        private int turnAmount = 0;
+        private HashSet<CardUI> matchedCards = new HashSet<CardUI>();
+        public int AmountOfCards { get; set; }
 
         public MainWindow(int amountOfCards)
         {             
@@ -96,8 +100,6 @@ namespace MemoryUI
             return icon;
         }
 
-        private CardUI firstFlipped = null;
-
         private void CardClicked(object sender, MouseButtonEventArgs e)
         {
             CardUI clickedCard = e.Source as CardUI;
@@ -107,30 +109,45 @@ namespace MemoryUI
                 return;
             }
 
-            TextBlock clickedCardTxt = clickedCard.Icon;
-            clickedCardTxt.Visibility = Visibility.Visible;
-
-            clickedCard.IsFlipped = true;
+            if(matchedCards.Count == amountOfCards)
+            {
+                //Score calc and pop-up with score
+            }
 
             if(firstFlipped == null)
             {
                 firstFlipped = clickedCard;
-            } else if(firstFlipped.Icon.Text == clickedCard.Icon.Text)
-            {
-                firstFlipped = null;
-                //add reference to MemoryLogic project function that calculates the score...
-            } else
-            {
-                firstFlipped.Icon.Visibility = Visibility.Hidden;
-                firstFlipped.IsFlipped = false;                   
+                firstFlipped.IsFlipped = true;
+                firstFlipped.Icon.Visibility = Visibility.Visible;
 
-                clickedCard.Icon.Visibility = Visibility.Hidden;
-                clickedCard.IsFlipped = false;
-                firstFlipped = null;
+            } else if(secondFlipped == null)
+            {
+                secondFlipped = clickedCard;
+                secondFlipped.IsFlipped = true;
+                secondFlipped.Icon.Visibility = Visibility.Visible;
+
+                if(firstFlipped.Icon.Text == secondFlipped.Icon.Text)
+                {
+                    turnAmount++;
+
+                    matchedCards.Add(firstFlipped);
+                    matchedCards.Add(secondFlipped);
+
+                    firstFlipped = null;
+                    secondFlipped = null;
+                } else
+                {
+                    turnAmount++;
+
+                    firstFlipped.Icon.Visibility = Visibility.Hidden;
+                    firstFlipped.IsFlipped = false;
+                    firstFlipped = null;
+
+                    secondFlipped.Icon.Visibility = Visibility.Hidden;
+                    secondFlipped.IsFlipped = false;
+                    secondFlipped = null;
+                }
             }
         } 
     }
 }
-
-//vragen naar gelijke iconen
-//vragen naar kaarten en waarden die verdwijnen
