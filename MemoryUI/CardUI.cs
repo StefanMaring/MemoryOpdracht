@@ -11,11 +11,16 @@ namespace MemoryUI
     public class CardUI : Border 
     {
         public bool IsFlipped { get; set; }
-        public TextBlock Value { get; set; }
+        public TextBlock Icon { get; set; }
 
         public CardUI(TextBlock icon) {
-            Value = icon;
-            Child = icon;
+            Icon = icon;            
+        }
+
+        public void SetCardIcon(string cardValue)
+        {
+            Icon.Text = cardValue;
+            Child = Icon;
         }
     }
 }

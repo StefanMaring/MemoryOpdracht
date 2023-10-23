@@ -9,8 +9,13 @@ namespace MemoryLogic
 {
     public class Game
     {
+        private int amountOfCards;
         private List<Card> gameCards = new List<Card>();
-        private int AmountOfCards;
+        public int AmountOfCards { get; set; }
+
+        public Game() { 
+        
+        }   
 
         public Game(int amountOfCards) {
             if(DetermineAmountOfCards(amountOfCards)) {
@@ -19,7 +24,7 @@ namespace MemoryLogic
             }            
         }
 
-        private bool DetermineAmountOfCards(int amountOfCards)
+        public bool DetermineAmountOfCards(int amountOfCards)
         {
             if (amountOfCards < 8)
             {
@@ -67,7 +72,7 @@ namespace MemoryLogic
             }
         }
 
-        private string[] CreateCardValues(int amountOfCards)
+        public string[] CreateCardValues(int amountOfCards)
         {
             switch (amountOfCards)
             {
@@ -98,7 +103,7 @@ namespace MemoryLogic
             }
         }  
         
-        private string[] ShuffleCardValues(string[] values)
+        public string[] ShuffleCardValues(string[] values)
         {
             Random r = new Random();
             string[] shuffledValues = values.OrderBy(x => r.Next()).ToArray();

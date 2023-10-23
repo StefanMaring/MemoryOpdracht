@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MemoryLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,34 +21,14 @@ namespace MemoryUI
         private int amountOfCards;
         public int AmountOfCards { get; set; }
 
-        private List<string> icons = new List<string>()
-        {
-            "#", "#", "$", "$", "X", "X", "&", "&",
-            "@", "@", "!", "!", "%", "%", "*", "*"
-        };
+        private Game game = new Game();
 
         public MainWindow(int amountOfCards)
-        {
-            switch(amountOfCards) //card icons based on switch
-            {
-                case 8:
-                    AmountOfCards = 8;
-                    break;
-                case 10:
-                    AmountOfCards = 10;
-                    break;
-                case 12:
-                    AmountOfCards = 12;
-                    break;
-                case 14:
-                    AmountOfCards = 14;
-                    break;
-                case 16:
-                    AmountOfCards = 16;
-                break;
-            }              
-
+        {             
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            
+            game.DetermineAmountOfCards(amountOfCards);
+            AmountOfCards = game.AmountOfCards;
 
             RenderCards(AmountOfCards);
             InitializeComponent();
@@ -76,11 +57,14 @@ namespace MemoryUI
                 grid.RowDefinitions.Add(new RowDefinition());
             }
 
+            string[] cardValues = game.ShuffleCardValues(game.CreateCardValues(AmountOfCards));
+            int valueIndex = 0;
+
             for (int row = 0; row < rowCount; row++)
             {
                 for (int col = 0; col < colCount; col++)
                 {
-                    CardUI card = new CardUI(AssignIconToCard());                   
+                    CardUI card = new CardUI(CreateTextBlock());                   
                     card.Height = cardHeight;
                     card.Width = cardWidth;
                     card.Background = new SolidColorBrush(Colors.Blue);                
@@ -88,6 +72,8 @@ namespace MemoryUI
                     card.Cursor = Cursors.Hand;                   
                     card.Name = $"card_{row}_{col}";
                     card.MouseLeftButtonDown += CardClicked; //event
+                    card.SetCardIcon(cardValues[valueIndex]); //assign value to card
+                    valueIndex++;
 
                     grid.Children.Add(card);
                     Grid.SetRow(card, row);
@@ -98,22 +84,15 @@ namespace MemoryUI
             AddChild(grid);
         }       
 
-        private TextBlock AssignIconToCard()
+        private TextBlock CreateTextBlock()
         {
             TextBlock icon = new TextBlock();
-            Random random = new Random();
-
-            int iconNumber = random.Next(icons.Count);
-
             icon.VerticalAlignment = VerticalAlignment.Center;
             icon.HorizontalAlignment = HorizontalAlignment.Center;
             icon.Foreground = new SolidColorBrush(Colors.White);
             icon.FontSize = 42;
             icon.Visibility = Visibility.Hidden;
-            icon.Text = icons[iconNumber];
-
-            icons.RemoveAt(iconNumber);
-
+            
             return icon;
         }
 
@@ -128,7 +107,7 @@ namespace MemoryUI
                 return;
             }
 
-            TextBlock clickedCardTxt = clickedCard.Value;
+            TextBlock clickedCardTxt = clickedCard.Icon;
             clickedCardTxt.Visibility = Visibility.Visible;
 
             clickedCard.IsFlipped = true;
@@ -136,16 +115,16 @@ namespace MemoryUI
             if(firstFlipped == null)
             {
                 firstFlipped = clickedCard;
-            } else if(firstFlipped.Value.Text == clickedCard.Value.Text)
+            } else if(firstFlipped.Icon.Text == clickedCard.Icon.Text)
             {
                 firstFlipped = null;
                 //add reference to MemoryLogic project function that calculates the score...
             } else
             {
-                firstFlipped.Value.Visibility = Visibility.Hidden;
+                firstFlipped.Icon.Visibility = Visibility.Hidden;
                 firstFlipped.IsFlipped = false;                   
 
-                clickedCard.Value.Visibility = Visibility.Hidden;
+                clickedCard.Icon.Visibility = Visibility.Hidden;
                 clickedCard.IsFlipped = false;
                 firstFlipped = null;
             }
