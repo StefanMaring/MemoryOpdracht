@@ -45,6 +45,9 @@ namespace MemoryUI
             int cardHeight = windowHeightX / rowCount;
             int cardWidth = windowHeightY / colCount;
 
+            string[] cardValues = game.ShuffleCardValues(game.CreateCardValues(cardAmount)); //array of card values
+            int valueIndex = 0;
+
             Grid grid = new Grid();
 
             for (int i = 0; i < colCount; i++)
@@ -56,9 +59,6 @@ namespace MemoryUI
             {
                 grid.RowDefinitions.Add(new RowDefinition());
             }
-
-            string[] cardValues = game.ShuffleCardValues(game.CreateCardValues(AmountOfCards));
-            int valueIndex = 0;
 
             for (int row = 0; row < rowCount; row++)
             {

@@ -28,6 +28,11 @@ namespace MemoryUI
             {
                 int cardAmount = int.Parse(amountOfCards.Text);
 
+                if(cardAmount < 8) { 
+                    amountOfCards.Text = "Minimaal 8 kaarten!";
+                    return;
+                }
+
                 if (cardAmount % 2 == 0)
                 {
                     MainWindow mw = new MainWindow(cardAmount);
