@@ -1,12 +1,14 @@
 ﻿using MemoryLogic;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -14,31 +16,42 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace MemoryUI
 {
     public partial class MainWindow : Window
     {
-        private int amountOfCards;
         private Game game = new Game();
         private CardUI firstFlipped = null;
         private CardUI secondFlipped = null;
         private int turnAmount = 0;
         private HashSet<CardUI> matchedCards = new HashSet<CardUI>();
+        private DispatcherTimer timer;
+        private TextBlock gameMessage = new TextBlock();
+        private Stopwatch stopWatch = new Stopwatch();
+
         public int AmountOfCards { get; set; }
 
         public MainWindow(int amountOfCards)
         {             
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
             game.DetermineAmountOfCards(amountOfCards);
             AmountOfCards = game.AmountOfCards;
 
-            RenderCards(AmountOfCards);
+            DrawGame(AmountOfCards);
             InitializeComponent();
+            
+            stopWatch.Start();
         }
 
-        private void RenderCards(int cardAmount)
+        private void DrawGame(int cardAmount)
         {
             int colCount = cardAmount / 2;
             int rowCount = 2;
@@ -85,7 +98,17 @@ namespace MemoryUI
                 }
             }
 
-            AddChild(grid);
+            gameMessage.Background = new SolidColorBrush(Colors.White);
+            gameMessage.Foreground = new SolidColorBrush(Colors.Black);
+            gameMessage.Margin = new Thickness(5,5,5,5);
+            gameMessage.FontSize = 16;
+            gameMessage.Text = "Welkom bij Memory!";
+
+            StackPanel panel = new StackPanel();  
+            panel.Children.Add(gameMessage);
+            panel.Children.Add(grid);
+
+            AddChild(panel);
         }       
 
         private TextBlock CreateTextBlock()
@@ -109,35 +132,41 @@ namespace MemoryUI
                 return;
             }
 
-            if(matchedCards.Count == amountOfCards)
-            {
-                //Score calc and pop-up with score
-            }
+            CardProcessing(clickedCard);
+        }
 
-            if(firstFlipped == null)
+        private void CardProcessing(CardUI clickedCard)
+        {
+            if (firstFlipped == null)
             {
                 firstFlipped = clickedCard;
                 firstFlipped.IsFlipped = true;
                 firstFlipped.Icon.Visibility = Visibility.Visible;
 
-            } else if(secondFlipped == null)
+            }
+            else if (secondFlipped == null)
             {
                 secondFlipped = clickedCard;
                 secondFlipped.IsFlipped = true;
                 secondFlipped.Icon.Visibility = Visibility.Visible;
 
-                if(firstFlipped.Icon.Text == secondFlipped.Icon.Text)
+                if (firstFlipped.Icon.Text == secondFlipped.Icon.Text)
                 {
                     turnAmount++;
+                    gameMessage.Foreground = new SolidColorBrush(Colors.Green);
+                    gameMessage.Text = "Match!";
 
                     matchedCards.Add(firstFlipped);
                     matchedCards.Add(secondFlipped);
 
                     firstFlipped = null;
                     secondFlipped = null;
-                } else
+                }
+                else
                 {
                     turnAmount++;
+                    gameMessage.Foreground = new SolidColorBrush(Colors.Red);
+                    gameMessage.Text = "Geen match!";
 
                     firstFlipped.Icon.Visibility = Visibility.Hidden;
                     firstFlipped.IsFlipped = false;
@@ -148,6 +177,20 @@ namespace MemoryUI
                     secondFlipped = null;
                 }
             }
-        } 
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (matchedCards.Count == AmountOfCards)
+            {
+                timer.Stop();
+                stopWatch.Stop();
+              
+                ScoreCalculator sc = new ScoreCalculator(AmountOfCards, (int)stopWatch.Elapsed.TotalSeconds, turnAmount);
+
+                gameMessage.Text = $"Totaal score: {sc.CalculateScore()}";
+                gameMessage.Foreground = new SolidColorBrush(Colors.Black);
+            }
+        }
     }
 }
