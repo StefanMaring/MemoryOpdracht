@@ -25,11 +25,11 @@ namespace MemoryUI
         private Game game = new Game();
         private CardUI firstFlipped = null;
         private CardUI secondFlipped = null;
-        private int turnAmount = 0;
-        private HashSet<CardUI> matchedCards = new HashSet<CardUI>();
-        private DispatcherTimer timer;
+        private HashSet<CardUI> matchedCards = new HashSet<CardUI>();              
         private TextBlock gameMessage = new TextBlock();
         private Stopwatch stopWatch = new Stopwatch();
+        private DispatcherTimer timer = new DispatcherTimer();
+        private int turnAmount = 0;
 
         public int AmountOfCards { get; set; }
 
@@ -37,7 +37,6 @@ namespace MemoryUI
         {             
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
