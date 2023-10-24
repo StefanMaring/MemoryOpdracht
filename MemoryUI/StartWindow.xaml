@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MemoryUI"
         mc:Ignorable="d"
-        Title="Welkom bij Memory" Height="200" Width="400" Background="#80ccff">
+        Title="Welkom bij Memory" Height="200" Width="400" Background="DeepSkyBlue">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -115,7 +115,8 @@
             Text="Met hoeveel kaarten wil je spelen?" 
             VerticalAlignment="Top" 
             FontWeight="Bold"
-            FontSize="16"/>
+            FontSize="16"
+            Foreground="White"/>
         <TextBox Style="{DynamicResource RoundedBoxCorners}" 
             Name="amountOfCards"
             HorizontalAlignment="Center"
@@ -123,20 +124,30 @@
             TextWrapping="Wrap" 
             Text=""
             VerticalAlignment="Top"
-            Width="120"
+            Width="150"
             Height="20"
             BorderThickness="1"
-            BorderBrush="LightGray" 
-            />
+            BorderBrush="LightGray"/>
+        <TextBox Style="{DynamicResource RoundedBoxCorners}" 
+            Name="playerField"
+            HorizontalAlignment="Center"
+            Margin="0,90,0,0" 
+            TextWrapping="Wrap" 
+            Text=""
+            VerticalAlignment="Top"
+            Width="150"
+            Height="20"
+            BorderThickness="1"
+            BorderBrush="LightGray"/>
         <Button Style="{DynamicResource RoundedCorners}"
             Name="StartBtn"
             Content="Start Game" 
             HorizontalAlignment="Center" 
-            Margin="0,100,0,0" 
+            Margin="0,120,0,0" 
             VerticalAlignment="Top" 
-            Width="120" 
+            Width="150" 
             Height="30"
-            Background="DeepSkyBlue" 
+            Background="Blue" 
             Foreground="White" 
             FontWeight="Bold"
             FontSize="14"

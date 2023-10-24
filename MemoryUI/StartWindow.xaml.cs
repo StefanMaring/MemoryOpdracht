@@ -27,6 +27,13 @@ namespace MemoryUI
             try
             {
                 int cardAmount = int.Parse(amountOfCards.Text);
+                string playerName = playerField.Text;
+
+                if(playerName == "" || playerName == null)
+                {
+                    playerField.Text = "Naam mag niet leeg zijn!";
+                    return;
+                }
 
                 if(cardAmount < 8) { 
                     amountOfCards.Text = "Minimaal 8 kaarten!";
@@ -41,7 +48,7 @@ namespace MemoryUI
 
                 if (cardAmount % 2 == 0)
                 {
-                    MainWindow mw = new MainWindow(cardAmount);
+                    MainWindow mw = new MainWindow(cardAmount, playerName);
 
                     mw.Show();
                     this.Close();

@@ -32,8 +32,9 @@ namespace MemoryUI
         private int turnAmount = 0;
 
         public int AmountOfCards { get; set; }
+        public string PlayerName { get; set; }
 
-        public MainWindow(int amountOfCards)
+        public MainWindow(int amountOfCards, string playerName)
         {             
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
@@ -43,6 +44,7 @@ namespace MemoryUI
 
             game.DetermineAmountOfCards(amountOfCards);
             AmountOfCards = game.AmountOfCards;
+            PlayerName = playerName;
 
             DrawGame(AmountOfCards);
             InitializeComponent();
@@ -101,7 +103,7 @@ namespace MemoryUI
             gameMessage.Foreground = new SolidColorBrush(Colors.Black);
             gameMessage.Margin = new Thickness(5,5,5,5);
             gameMessage.FontSize = 16;
-            gameMessage.Text = "Welkom bij Memory!";
+            gameMessage.Text = $"Welkom bij Memory, {PlayerName}!";
 
             StackPanel panel = new StackPanel();  
             panel.Children.Add(gameMessage);
