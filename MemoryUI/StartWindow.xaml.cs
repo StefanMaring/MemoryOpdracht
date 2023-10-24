@@ -33,6 +33,12 @@ namespace MemoryUI
                     return;
                 }
 
+                if(cardAmount > 20)
+                {
+                    amountOfCards.Text = "Maximaal 20 kaarten!";
+                    return;
+                }
+
                 if (cardAmount % 2 == 0)
                 {
                     MainWindow mw = new MainWindow(cardAmount);

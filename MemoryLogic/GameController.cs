@@ -99,7 +99,7 @@ namespace MemoryLogic
                 Console.ForegroundColor = ConsoleColor.Gray;
 
                 firstFlippedCard.HasBeenMatched = true;
-                secondFlippedCard.HasBeenMatched= true;
+                secondFlippedCard.HasBeenMatched = true;
 
                 matchedCards.Add(firstFlippedCard);
                 matchedCards.Add(secondFlippedCard);
