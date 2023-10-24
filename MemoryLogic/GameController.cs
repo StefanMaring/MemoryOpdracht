@@ -12,6 +12,7 @@ namespace MemoryLogic
         private Card firstFlippedCard = null;
         private Card secondFlippedCard = null;
         private bool gameRunning = true;
+        private bool showGame = false;
         private int turnAmount = 0;
         private List<Card> cards;
         private HashSet<Card> matchedCards = new HashSet<Card>();        
@@ -37,6 +38,7 @@ namespace MemoryLogic
 
                 try
                 {
+                    DisplayGame();
                     Console.WriteLine("Draai kaart:");
                     int pos = int.Parse(Console.ReadLine());
 
@@ -47,7 +49,6 @@ namespace MemoryLogic
                         if (matchedCards.Contains(enteredCard))
                         {
                             Console.WriteLine("De kaart is al gematched!");
-                            DisplayMatched(); //allows user to see which cards already have been turned
                             continue;
                         }
 
@@ -61,6 +62,7 @@ namespace MemoryLogic
                         {
                             firstFlippedCard = enteredCard;
                             firstFlippedCard.IsFlipped = true;
+                            showGame = true;
 
                             Console.WriteLine($"Waarde kaart: {firstFlippedCard.Value}");
                         }
@@ -71,6 +73,7 @@ namespace MemoryLogic
 
                             Console.WriteLine($"Waarde kaart: {secondFlippedCard.Value}");
                             CheckIfCardsMatch(firstFlippedCard, secondFlippedCard); //check to see if cards match
+                            showGame = false;
                         }
                     }
                     catch (ArgumentOutOfRangeException) {
@@ -94,6 +97,9 @@ namespace MemoryLogic
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Match!");
                 Console.ForegroundColor = ConsoleColor.Gray;
+
+                firstFlippedCard.HasBeenMatched = true;
+                secondFlippedCard.HasBeenMatched= true;
 
                 matchedCards.Add(firstFlippedCard);
                 matchedCards.Add(secondFlippedCard);
@@ -129,19 +135,24 @@ namespace MemoryLogic
             Console.WriteLine($"Aantal beurten: {turnAmount}");
             Console.WriteLine($"Totaal score: {sc.CalculateScore()}");
             Console.ForegroundColor = ConsoleColor.Gray;
-        }
+        }        
 
-        private void DisplayMatched()
+        private void DisplayGame()
         {
-            if(matchedCards.Count > 0)
+            if(!showGame)
             {
-                Console.WriteLine("Gematchde kaarten: ");
-                List<Card> orderedCards = matchedCards.OrderBy(i => i.Number).ToList();
-                foreach (Card card in orderedCards)
+                foreach (Card item in cards)
                 {
-                    Console.WriteLine($"Kaart {card.Number}");
+                    if(!item.HasBeenMatched)
+                    {
+                        Console.Write($"{item.Number} ");
+                    } else
+                    {
+                        Console.Write($"X ");
+                    }                                
                 }
-            }          
+                Console.WriteLine("\n");
+            }
         }
     }
 }
