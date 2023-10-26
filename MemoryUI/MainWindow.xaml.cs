@@ -100,19 +100,23 @@ namespace MemoryUI
             gameMessage.Text = $"Welkom bij Memory, {PlayerName}!";
 
             ButtonUI btn1 = new ButtonUI();
-            resetGameBtn = btn1.CreateButton("ResetGameButton", "Reset", HorizontalAlignment.Right);
+            resetGameBtn = btn1.CreateButton("ResetGameButton", "Reset", HorizontalAlignment.Left);
             resetGameBtn.Click += ResetGameBtn_Click;
 
             ButtonUI btn2 = new ButtonUI();
             scoreTabBtn = btn2.CreateButton("ScoreTabButton", "Highscores", HorizontalAlignment.Right);
             scoreTabBtn.Click += ScoreTabBtn_Click;
+                         
+            DockPanel btnPanel = new DockPanel();
+            btnPanel.HorizontalAlignment = HorizontalAlignment.Right;       
+            btnPanel.Children.Add(resetGameBtn); 
+            btnPanel.Children.Add(scoreTabBtn);
 
-            StackPanel panel = new StackPanel();  
             DockPanel topPanel = new DockPanel();
             topPanel.Children.Add(gameMessage);
-            topPanel.Children.Add(resetGameBtn); 
-            topPanel.Children.Add(scoreTabBtn);
+            topPanel.Children.Add(btnPanel);
 
+            StackPanel panel = new StackPanel();
             panel.Children.Add(topPanel);
             panel.Children.Add(grid);
 
@@ -187,7 +191,7 @@ namespace MemoryUI
             }
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e) //Event that checks if cards are all matched
         {
             if (matchedCards.Count == AmountOfCards)
             {
