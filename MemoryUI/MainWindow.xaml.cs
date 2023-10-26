@@ -28,6 +28,7 @@ namespace MemoryUI
         private CardUI secondFlipped = null;
         private HashSet<CardUI> matchedCards = new HashSet<CardUI>();              
         private TextBlock gameMessage = new TextBlock();
+        private Button scoreTabBtn = new Button();
         private Stopwatch stopWatch = new Stopwatch();
         private DispatcherTimer timer = new DispatcherTimer();
         private int turnAmount = 0;
@@ -102,16 +103,32 @@ namespace MemoryUI
 
             gameMessage.Background = new SolidColorBrush(Colors.White);
             gameMessage.Foreground = new SolidColorBrush(Colors.Black);
+            gameMessage.HorizontalAlignment = HorizontalAlignment.Left;
             gameMessage.Margin = new Thickness(5,5,5,5);
             gameMessage.FontSize = 16;
             gameMessage.Text = $"Welkom bij Memory, {PlayerName}!";
 
+            scoreTabBtn.Background = new SolidColorBrush(Colors.Blue);
+            scoreTabBtn.Foreground = new SolidColorBrush(Colors.White);
+            scoreTabBtn.FontSize = 16;
+            scoreTabBtn.FontWeight = FontWeights.Bold;
+            scoreTabBtn.HorizontalAlignment = HorizontalAlignment.Right;
+            scoreTabBtn.Cursor = Cursors.Hand;
+            scoreTabBtn.Margin = new Thickness(0,5,5,0);
+            scoreTabBtn.Name = "ScoreTabButton";
+            scoreTabBtn.Content = "Highscores";
+            scoreTabBtn.Click += ScoreTabBtn_Click;
+
             StackPanel panel = new StackPanel();  
-            panel.Children.Add(gameMessage);
+            DockPanel topPanel = new DockPanel();
+            topPanel.Children.Add(gameMessage);
+            topPanel.Children.Add(scoreTabBtn);
+
+            panel.Children.Add(topPanel);
             panel.Children.Add(grid);
 
             AddChild(panel);
-        }       
+        }        
 
         private TextBlock CreateTextBlock()
         {
@@ -195,6 +212,11 @@ namespace MemoryUI
                 DataWriter dw = new DataWriter(PlayerName, sc.CalculateScore(), AmountOfCards);
                 dw.WriteDataToJSON();
             }
+        }
+
+        private void ScoreTabBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
