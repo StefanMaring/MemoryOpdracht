@@ -9,16 +9,9 @@ using System.Diagnostics;
 
 namespace MemoryData
 {
-    public class DataWriter
+    public class DataWriter : Data
     {
-        private string playerName;
-        private double score;
-        private int amountOfCards;
         private const string filePath = "highscores.json";
-
-        public string PlayerName { get { return playerName; } set {  playerName = value; } }
-        public double Score { get { return score; } set { score = value; } }
-        public int AmountOfCards { get {  return amountOfCards; } set {  amountOfCards = value; } }
 
         public DataWriter(string playerName, double score, int amountOfCards) { 
             PlayerName = playerName;
@@ -33,7 +26,7 @@ namespace MemoryData
             if(File.Exists(filePath))
             {
                 string existingScores = File.ReadAllText(filePath);
-                List<DataWriter> scoreList = JsonConvert.DeserializeObject<List<DataWriter>>(existingScores);
+                List<Data> scoreList = JsonConvert.DeserializeObject<List<Data>>(existingScores);
 
                 scoreList.Add(this);
 

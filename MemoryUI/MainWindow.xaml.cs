@@ -189,7 +189,6 @@ namespace MemoryUI
                 stopWatch.Stop();
               
                 ScoreCalculator sc = new ScoreCalculator(AmountOfCards, (int)stopWatch.Elapsed.TotalSeconds, turnAmount);
-
                 gameMessage.Text = $"Totaal score: {sc.CalculateScore()}";
                 gameMessage.Foreground = new SolidColorBrush(Colors.Black);
 
