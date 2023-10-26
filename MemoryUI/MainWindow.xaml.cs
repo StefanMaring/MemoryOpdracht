@@ -3,20 +3,10 @@ using MemoryLogic;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace MemoryUI
@@ -28,7 +18,8 @@ namespace MemoryUI
         private CardUI secondFlipped = null;
         private HashSet<CardUI> matchedCards = new HashSet<CardUI>();              
         private TextBlock gameMessage = new TextBlock();
-        private Button scoreTabBtn = new Button();
+        private ButtonUI resetGameBtn;
+        private ButtonUI scoreTabBtn;
         private Stopwatch stopWatch = new Stopwatch();
         private DispatcherTimer timer = new DispatcherTimer();
         private int turnAmount = 0;
@@ -108,20 +99,18 @@ namespace MemoryUI
             gameMessage.FontSize = 16;
             gameMessage.Text = $"Welkom bij Memory, {PlayerName}!";
 
-            scoreTabBtn.Background = new SolidColorBrush(Colors.Blue);
-            scoreTabBtn.Foreground = new SolidColorBrush(Colors.White);
-            scoreTabBtn.FontSize = 16;
-            scoreTabBtn.FontWeight = FontWeights.Bold;
-            scoreTabBtn.HorizontalAlignment = HorizontalAlignment.Right;
-            scoreTabBtn.Cursor = Cursors.Hand;
-            scoreTabBtn.Margin = new Thickness(0,5,5,0);
-            scoreTabBtn.Name = "ScoreTabButton";
-            scoreTabBtn.Content = "Highscores";
+            ButtonUI btn1 = new ButtonUI();
+            resetGameBtn = btn1.CreateButton("ResetGameButton", "Reset", HorizontalAlignment.Right);
+            resetGameBtn.Click += ResetGameBtn_Click;
+
+            ButtonUI btn2 = new ButtonUI();
+            scoreTabBtn = btn2.CreateButton("ScoreTabButton", "Highscores", HorizontalAlignment.Right);
             scoreTabBtn.Click += ScoreTabBtn_Click;
 
             StackPanel panel = new StackPanel();  
             DockPanel topPanel = new DockPanel();
             topPanel.Children.Add(gameMessage);
+            topPanel.Children.Add(resetGameBtn); 
             topPanel.Children.Add(scoreTabBtn);
 
             panel.Children.Add(topPanel);
@@ -218,6 +207,13 @@ namespace MemoryUI
         {
             HighscoreWindow hw = new HighscoreWindow();
             hw.Show();
+        }
+
+        private void ResetGameBtn_Click(object sender, RoutedEventArgs e)
+        {
+            StartWindow sw = new StartWindow();
+            sw.Show();
+            this.Close();
         }
     }
 }
