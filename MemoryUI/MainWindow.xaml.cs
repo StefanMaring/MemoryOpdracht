@@ -50,11 +50,11 @@ namespace MemoryUI
             int colCount = cardAmount / 2;
             int rowCount = 2;
 
-            int windowHeightX = 800;
-            int windowHeightY = 800;
+            int windowHeightX = 700;
+            int windowWidthY = 900;
 
             int cardHeight = windowHeightX / rowCount;
-            int cardWidth = windowHeightY / colCount;
+            int cardWidth = windowWidthY / colCount;
 
             string[] cardValues = game.ShuffleCardValues(game.CreateCardValues(cardAmount)); //shuffled array of card values
             int valueIndex = 0;
