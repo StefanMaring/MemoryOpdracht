@@ -1,4 +1,5 @@
-﻿using MemoryLogic;
+﻿using MemoryData;
+using MemoryLogic;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -191,6 +192,9 @@ namespace MemoryUI
 
                 gameMessage.Text = $"Totaal score: {sc.CalculateScore()}";
                 gameMessage.Foreground = new SolidColorBrush(Colors.Black);
+
+                DataWriter dw = new DataWriter(PlayerName, sc.CalculateScore(), AmountOfCards);
+                dw.WriteDataToJSON();
             }
         }
     }
