@@ -216,7 +216,8 @@ namespace MemoryUI
 
         private void ScoreTabBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            HighscoreWindow hw = new HighscoreWindow();
+            hw.Show();
         }
     }
 }
