@@ -25,12 +25,10 @@ namespace MemoryUI
         private bool withImages;
         private int turnAmount = 0;
 
-        //private const string imageFilePath = "cardImages/";
-
         public int AmountOfCards { get; set; }
         public string PlayerName { get; set; }
 
-        public MainWindow(int amountOfCards, string playerName, bool withImages) //ADD withImages TO CONSTRUCTOR
+        public MainWindow(int amountOfCards, string playerName, bool withImages)
         {             
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
