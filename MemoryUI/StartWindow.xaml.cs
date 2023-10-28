@@ -75,7 +75,7 @@ namespace MemoryUI
             List<string> images = new List<string>();
 
             OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            fileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg";
             fileDialog.Multiselect = true;
 
             if (fileDialog.ShowDialog() == true)
