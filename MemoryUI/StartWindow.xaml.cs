@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -74,7 +75,9 @@ namespace MemoryUI
 
         private void UploadImagesEvent(object sender, RoutedEventArgs e)
         {
-            
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            fileDialog.ShowDialog();
         }
     }
 }
