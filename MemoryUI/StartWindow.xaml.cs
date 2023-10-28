@@ -17,6 +17,8 @@ namespace MemoryUI
 {
     public partial class StartWindow : Window
     {
+        private const string imageFilePath = "cardImages/";
+
         public StartWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -32,18 +34,20 @@ namespace MemoryUI
 
                 if(playerName == "" || playerName == null)
                 {
-                    playerField.Text = "Naam mag niet leeg zijn!";
+                    MessageBox.Text = "Naam mag niet leeg zijn!";
                     return;
                 }
 
-                if(cardAmount < 8) { 
-                    amountOfCards.Text = "Minimaal 8 kaarten!";
+                if(cardAmount < 8) {
+                    amountOfCards.Text = "";
+                    MessageBox.Text = "Minimaal 8 kaarten!";
                     return;
                 }
 
                 if(cardAmount > 20)
                 {
-                    amountOfCards.Text = "Maximaal 20 kaarten!";
+                    amountOfCards.Text = "";
+                    MessageBox.Text = "Maximaal 20 kaarten!";
                     return;
                 }
 
@@ -65,19 +69,41 @@ namespace MemoryUI
                 }
                 else
                 {
-                    amountOfCards.Text = "Alleen even getallen!";
+                    amountOfCards.Text = "";
+                    MessageBox.Text = "Alleen even getallen!";
                 }
             } catch (FormatException)
             {
-                amountOfCards.Text = "Alleen getallen!";
+                amountOfCards.Text = "";
+                MessageBox.Text = "Alleen getallen!";
             }
         }
 
         private void UploadImagesEvent(object sender, RoutedEventArgs e)
         {
+            List<string> images = new List<string>();
+
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
-            fileDialog.ShowDialog();
+            fileDialog.Multiselect = true;
+            
+            if(fileDialog.ShowDialog() == true)
+            {
+                foreach(string imageFile in fileDialog.FileNames) { 
+                    images.Add(imageFile);
+                }
+
+                SaveImagesToDirectory(images, imageFilePath);
+            }
+        }
+
+        private void SaveImagesToDirectory(List<string> images, string directory)
+        {
+            //foreach (string imageFile in images) {
+            //    string destinationPath = Path.Combine(directory, Path.GetFileName(imageFile));
+            //    File.Copy(imageFile, destinationPath, true);
+            //}
+            return;
         }
     }
 }

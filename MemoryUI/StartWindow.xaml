@@ -159,5 +159,12 @@
             FontSize="14"
             BorderBrush="White"
             Click="StartGameEvent"/>
+        <TextBlock
+            Name="MessageBox"
+            Margin="0,185,0,0"
+            HorizontalAlignment="Center"
+            Foreground="White"
+            FontSize="12"
+            FontWeight="Medium"/>
     </Grid>
 </Window>

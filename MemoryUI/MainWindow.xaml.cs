@@ -25,7 +25,7 @@ namespace MemoryUI
         private bool withImages;
         private int turnAmount = 0;
 
-        private const string imageFilePath = "cardImages/";
+        //private const string imageFilePath = "cardImages/";
 
         public int AmountOfCards { get; set; }
         public string PlayerName { get; set; }
