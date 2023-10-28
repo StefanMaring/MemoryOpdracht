@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,11 +100,12 @@ namespace MemoryUI
 
         private void SaveImagesToDirectory(List<string> images, string directory)
         {
-            //foreach (string imageFile in images) {
-            //    string destinationPath = Path.Combine(directory, Path.GetFileName(imageFile));
-            //    File.Copy(imageFile, destinationPath, true);
-            //}
-            return;
+            foreach (string imageFile in images)
+            {
+                string destinationPath = System.IO.Path.Combine(directory, System.IO.Path.GetFileName(imageFile));
+                File.Copy(imageFile, destinationPath, true);
+            }
+            MessageBox.Text = "Foto's succesvol geüpload!";
         }
     }
 }
