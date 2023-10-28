@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MemoryUI"
         mc:Ignorable="d"
-        Title="Welkom bij Memory" Height="200" Width="400" Background="DeepSkyBlue">
+        Title="Welkom bij Memory" Height="250" Width="400" Background="DeepSkyBlue">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -139,11 +139,17 @@
             Height="20"
             BorderThickness="1"
             BorderBrush="LightGray"/>
+        <CheckBox Content="Speel met foto's"
+            Name="withImagesChck"
+            HorizontalAlignment="Center"
+            Margin="-45,120,0,0"
+            Foreground="White"
+            Click="UploadImagesEvent"/>
         <Button Style="{DynamicResource RoundedCorners}"
             Name="StartBtn"
             Content="Start Game" 
             HorizontalAlignment="Center" 
-            Margin="0,120,0,0" 
+            Margin="0,150,0,0" 
             VerticalAlignment="Top" 
             Width="150" 
             Height="30"

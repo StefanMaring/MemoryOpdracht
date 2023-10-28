@@ -48,10 +48,19 @@ namespace MemoryUI
 
                 if (cardAmount % 2 == 0)
                 {
-                    MainWindow mw = new MainWindow(cardAmount, playerName);
+                    if(withImagesChck.IsChecked == false)
+                    {
+                        MainWindow mw = new MainWindow(cardAmount, playerName, false);
 
-                    mw.Show();
-                    this.Close();
+                        mw.Show();
+                        this.Close();
+                    } else
+                    {
+                        MainWindow mwi = new MainWindow(cardAmount, playerName, true);
+
+                        mwi.Show();
+                        this.Close();
+                    }                    
                 }
                 else
                 {
@@ -61,6 +70,11 @@ namespace MemoryUI
             {
                 amountOfCards.Text = "Alleen getallen!";
             }
+        }
+
+        private void UploadImagesEvent(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

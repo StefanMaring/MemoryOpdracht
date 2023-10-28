@@ -22,14 +22,19 @@ namespace MemoryUI
         private ButtonUI scoreTabBtn;
         private Stopwatch stopWatch = new Stopwatch();
         private DispatcherTimer timer = new DispatcherTimer();
+        private bool withImages;
         private int turnAmount = 0;
+
+        private const string imageFilePath = "cardImages/";
 
         public int AmountOfCards { get; set; }
         public string PlayerName { get; set; }
 
-        public MainWindow(int amountOfCards, string playerName)
+        public MainWindow(int amountOfCards, string playerName, bool withImages) //ADD withImages TO CONSTRUCTOR
         {             
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            this.withImages = withImages;
 
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
@@ -43,7 +48,7 @@ namespace MemoryUI
             InitializeComponent();
             
             stopWatch.Start();
-        }
+        }      
 
         private void DrawGame(int cardAmount)
         {
