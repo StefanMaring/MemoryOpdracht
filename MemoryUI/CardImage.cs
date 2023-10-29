@@ -18,6 +18,7 @@ namespace MemoryUI
         {
             ImagePath = imagePath;
             Icon = icon;
+            Icon.Foreground.Opacity = 0;
             Icon.Background = new ImageBrush(SetImage(ImagePath));
         }
 

@@ -154,8 +154,8 @@ namespace MemoryUI
         private TextBlock CreateTextBlock()
         {
             TextBlock icon = new TextBlock();
-            icon.VerticalAlignment = VerticalAlignment.Center;
-            icon.HorizontalAlignment = HorizontalAlignment.Center;
+            icon.TextAlignment = TextAlignment.Center;
+            icon.Padding = new Thickness(0, 150, 0, 0);
             icon.Foreground = new SolidColorBrush(Colors.White);
             icon.FontSize = 42;
             icon.Visibility = Visibility.Hidden;
@@ -197,13 +197,12 @@ namespace MemoryUI
         }
 
         private void CardProcessing(CardBase clickedCard)
-        {
+        {                    
             if (firstFlipped == null)
             {
                 firstFlipped = clickedCard;
                 firstFlipped.IsFlipped = true;
                 firstFlipped.Icon.Visibility = Visibility.Visible;
-
             }
             else if (secondFlipped == null)
             {
