@@ -81,8 +81,16 @@ namespace MemoryUI
             int cardHeight = windowHeightX / rowCount;
             int cardWidth = windowWidthY / colCount;
 
-            string[] cardValues = game.ShuffleCardValues(game.CreateCardValues(cardAmount)); //shuffled array of card values
-            string[] cardImages = game.ShuffleCardValues(GetImagesFromDirectory(cardAmount)); //shuffled array of image paths        
+            string[] cardValues;
+
+            if(!withImages)
+            {
+                cardValues = game.ShuffleCardValues(game.CreateCardValues(cardAmount)); //shuffled array of card values
+            } else
+            {
+                cardValues = game.ShuffleCardValues(GetImagesFromDirectory(cardAmount)); //shuffled array of image paths
+            }
+            
             int valueIndex = 0;
 
             Grid grid = new Grid();
@@ -103,15 +111,13 @@ namespace MemoryUI
                 {
                     CardBase card;
 
-                    if (!withImages) //determine which type of card and set card value
+                    if (!withImages) //determine which type of card
                     {
                         card = new CardText(CreateTextBlock());
-                        ((CardText)card).SetCardIcon(cardValues[valueIndex]);
                     }
                     else
                     {
-                        card = new CardImage(cardImages[valueIndex], CreateTextBlock());
-                        ((CardImage)card).SetCardIcon(cardImages[valueIndex]);
+                        card = new CardImage(cardValues[valueIndex], CreateTextBlock());
                     }
 
                     card.Height = cardHeight;
@@ -122,6 +128,7 @@ namespace MemoryUI
                     card.Margin = new Thickness(5, 5, 5, 5);
                     card.Cursor = Cursors.Hand;
                     card.Name = $"card_{row}_{col}";
+                    card.SetCardIcon(cardValues[valueIndex]);
                     card.MouseLeftButtonDown += CardClicked; //event
                     valueIndex++;
 
@@ -172,6 +179,27 @@ namespace MemoryUI
             icon.Visibility = Visibility.Hidden;
             
             return icon;
+        }
+
+        public string[] GetImagesFromDirectory(int cardAmount)
+        {
+            int runAmount = cardAmount / 2;
+            string[] images = Directory.GetFiles(directoryPath);
+
+            List<string> imageDuplicates = new List<string>();
+
+            int counter = 0;
+            foreach (string imagePath in images)
+            {
+                if (counter != runAmount)
+                {
+                    imageDuplicates.Add(imagePath);
+                    imageDuplicates.Add(imagePath);
+                    counter++;
+                }
+            }
+
+            return imageDuplicates.ToArray();
         }
 
         private void CardClicked(object sender, MouseButtonEventArgs e)
@@ -257,31 +285,6 @@ namespace MemoryUI
             StartWindow sw = new StartWindow();
             sw.Show();
             this.Close();
-        }
-
-        public static string[] GetImagesFromDirectory(int cardAmount)
-        {
-            int runAmount = cardAmount / 2;
-            string[] images = Directory.GetFiles(directoryPath);
-
-            List<string> imageDuplicates = new List<string>();
-
-            int counter = 0;
-            foreach (string imagePath in images)
-            {
-                if (counter != runAmount) {
-                    imageDuplicates.Add(imagePath);
-                    imageDuplicates.Add(imagePath);
-                    counter++;
-                }                  
-            }
-
-            foreach (string imagePath in imageDuplicates)
-            {
-                Trace.WriteLine(imagePath);
-            }
-
-            return imageDuplicates.ToArray();
-        }
+        }        
     }
 }
