@@ -18,7 +18,7 @@ namespace MemoryUI
         {
             ImagePath = imagePath;
             Icon = icon;
-            Background = new ImageBrush(SetImage(ImagePath));
+            Icon.Background = new ImageBrush(SetImage(ImagePath));
         }
 
         private BitmapImage SetImage(string imagePath)

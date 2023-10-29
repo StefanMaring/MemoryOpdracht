@@ -82,7 +82,7 @@ namespace MemoryUI
             int cardWidth = windowWidthY / colCount;
 
             string[] cardValues = game.ShuffleCardValues(game.CreateCardValues(cardAmount)); //shuffled array of card values
-            string[] cardImages = game.ShuffleCardValues(GetImagesFromDirectory()); //shuffled array of image paths        
+            string[] cardImages = game.ShuffleCardValues(GetImagesFromDirectory(cardAmount)); //shuffled array of image paths        
             int valueIndex = 0;
 
             Grid grid = new Grid();
@@ -107,7 +107,6 @@ namespace MemoryUI
                     {
                         card = new CardText(CreateTextBlock());
                         ((CardText)card).SetCardIcon(cardValues[valueIndex]);
-                        card.Background = new SolidColorBrush(Colors.Blue);
                     }
                     else
                     {
@@ -116,7 +115,10 @@ namespace MemoryUI
                     }
 
                     card.Height = cardHeight;
-                    card.Width = cardWidth;                   
+                    card.Width = cardWidth;
+                    card.Icon.Height = cardHeight;
+                    card.Icon.Width = cardWidth;
+                    card.Background = new SolidColorBrush(Colors.Blue);
                     card.Margin = new Thickness(5, 5, 5, 5);
                     card.Cursor = Cursors.Hand;
                     card.Name = $"card_{row}_{col}";
@@ -257,16 +259,26 @@ namespace MemoryUI
             this.Close();
         }
 
-        public static string[] GetImagesFromDirectory()
+        public static string[] GetImagesFromDirectory(int cardAmount)
         {
+            int runAmount = cardAmount / 2;
             string[] images = Directory.GetFiles(directoryPath);
 
             List<string> imageDuplicates = new List<string>();
 
+            int counter = 0;
             foreach (string imagePath in images)
             {
-                imageDuplicates.Add(imagePath);
-                imageDuplicates.Add(imagePath);
+                if (counter != runAmount) {
+                    imageDuplicates.Add(imagePath);
+                    imageDuplicates.Add(imagePath);
+                    counter++;
+                }                  
+            }
+
+            foreach (string imagePath in imageDuplicates)
+            {
+                Trace.WriteLine(imagePath);
             }
 
             return imageDuplicates.ToArray();
