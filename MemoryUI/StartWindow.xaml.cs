@@ -46,7 +46,7 @@ namespace MemoryUI
                 {
                     if(withImagesChck.IsChecked == false)
                     {
-                        MainWindow mw = new MainWindow(cardAmount, playerName, false);
+                        MainWindow mw = new MainWindow(cardAmount, playerName);
 
                         mw.Show();
                         this.Close();

@@ -3,6 +3,8 @@ using MemoryLogic;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,9 +16,9 @@ namespace MemoryUI
     public partial class MainWindow : Window
     {
         private Game game = new Game();
-        private CardUI firstFlipped = null;
-        private CardUI secondFlipped = null;
-        private HashSet<CardUI> matchedCards = new HashSet<CardUI>();              
+        private CardText firstFlipped = null;
+        private CardText secondFlipped = null;
+        private HashSet<CardText> matchedCards = new HashSet<CardText>();              
         private TextBlock gameMessage = new TextBlock();
         private ButtonUI resetGameBtn;
         private ButtonUI scoreTabBtn;
@@ -25,11 +27,31 @@ namespace MemoryUI
         private bool withImages;
         private int turnAmount = 0;
 
+        private const string directoryPath = "cardImages/";
+
         public int AmountOfCards { get; set; }
         public string PlayerName { get; set; }
 
-        public MainWindow(int amountOfCards, string playerName, bool withImages)
+        public MainWindow(int amountOfCards, string playerName)
         {             
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;            
+
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
+            game.DetermineAmountOfCards(amountOfCards);
+            AmountOfCards = game.AmountOfCards;
+            PlayerName = playerName;
+
+            DrawGame(AmountOfCards);
+            InitializeComponent();
+            
+            stopWatch.Start();
+        }
+
+        public MainWindow(int amountOfCards, string playerName, bool withImages)
+        {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             this.withImages = withImages;
@@ -44,9 +66,9 @@ namespace MemoryUI
 
             DrawGame(AmountOfCards);
             InitializeComponent();
-            
+
             stopWatch.Start();
-        }      
+        }
 
         private void DrawGame(int cardAmount)
         {
@@ -60,6 +82,7 @@ namespace MemoryUI
             int cardWidth = windowWidthY / colCount;
 
             string[] cardValues = game.ShuffleCardValues(game.CreateCardValues(cardAmount)); //shuffled array of card values
+            string[] cardImages = game.ShuffleCardValues(GetImagesFromDirectory()); //shuffled array of image paths        
             int valueIndex = 0;
 
             Grid grid = new Grid();
@@ -78,20 +101,31 @@ namespace MemoryUI
             {
                 for (int col = 0; col < colCount; col++)
                 {
-                    CardUI card = new CardUI(CreateTextBlock());                   
+                    CardBase card;
+
+                    if (!withImages) //determine which type of card and set card value
+                    {
+                        card = new CardText(CreateTextBlock());
+                        ((CardText)card).SetCardIcon(cardValues[valueIndex]);
+                        card.Background = new SolidColorBrush(Colors.Blue);
+                    }
+                    else
+                    {
+                        card = new CardImage(cardImages[valueIndex], CreateTextBlock());
+                        ((CardImage)card).SetCardIcon(cardImages[valueIndex]);
+                    }
+
                     card.Height = cardHeight;
-                    card.Width = cardWidth;
-                    card.Background = new SolidColorBrush(Colors.Blue);                
-                    card.Margin = new Thickness(5,5,5,5);
-                    card.Cursor = Cursors.Hand;                   
+                    card.Width = cardWidth;                   
+                    card.Margin = new Thickness(5, 5, 5, 5);
+                    card.Cursor = Cursors.Hand;
                     card.Name = $"card_{row}_{col}";
                     card.MouseLeftButtonDown += CardClicked; //event
-                    card.SetCardIcon(cardValues[valueIndex]); //assign value to card
                     valueIndex++;
 
                     grid.Children.Add(card);
                     Grid.SetRow(card, row);
-                    Grid.SetColumn(card, col); 
+                    Grid.SetColumn(card, col);                                                      
                 }
             }
 
@@ -140,7 +174,7 @@ namespace MemoryUI
 
         private void CardClicked(object sender, MouseButtonEventArgs e)
         {
-            CardUI clickedCard = e.Source as CardUI;
+            CardText clickedCard = e.Source as CardText;
 
             if (clickedCard == null || clickedCard.IsFlipped)
             {
@@ -150,7 +184,7 @@ namespace MemoryUI
             CardProcessing(clickedCard);
         }
 
-        private void CardProcessing(CardUI clickedCard)
+        private void CardProcessing(CardText clickedCard)
         {
             if (firstFlipped == null)
             {
@@ -221,6 +255,21 @@ namespace MemoryUI
             StartWindow sw = new StartWindow();
             sw.Show();
             this.Close();
+        }
+
+        public static string[] GetImagesFromDirectory()
+        {
+            string[] images = Directory.GetFiles(directoryPath);
+
+            List<string> imageDuplicates = new List<string>();
+
+            foreach (string imagePath in images)
+            {
+                imageDuplicates.Add(imagePath);
+                imageDuplicates.Add(imagePath);
+            }
+
+            return imageDuplicates.ToArray();
         }
     }
 }
