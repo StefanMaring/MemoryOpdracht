@@ -32,26 +32,8 @@ namespace MemoryUI
         public int AmountOfCards { get; set; }
         public string PlayerName { get; set; }
 
-        public MainWindow(int amountOfCards, string playerName)
-        {             
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;            
-
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += Timer_Tick;
-            timer.Start();
-
-            game.DetermineAmountOfCards(amountOfCards);
-            AmountOfCards = game.AmountOfCards;
-            PlayerName = playerName;
-
-            DrawGame(AmountOfCards);
-            InitializeComponent();
-            
-            stopWatch.Start();
-        }
-
         public MainWindow(int amountOfCards, string playerName, bool withImages)
-        {
+        {             
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             this.withImages = withImages;
@@ -66,7 +48,7 @@ namespace MemoryUI
 
             DrawGame(AmountOfCards);
             InitializeComponent();
-
+            
             stopWatch.Start();
         }
 

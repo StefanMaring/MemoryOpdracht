@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace MemoryUI
@@ -46,12 +47,18 @@ namespace MemoryUI
                 {
                     if(withImagesChck.IsChecked == false)
                     {
-                        MainWindow mw = new MainWindow(cardAmount, playerName);
+                        MainWindow mw = new MainWindow(cardAmount, playerName, false);
 
                         mw.Show();
                         this.Close();
                     } else
                     {
+                        if(!Directory.EnumerateFiles(imageFilePath).Any())
+                        {
+                            MessageBox.Text = "Geen foto's geüpload!";
+                            return;
+                        }
+
                         MainWindow mwi = new MainWindow(cardAmount, playerName, true);
 
                         mwi.Show();
