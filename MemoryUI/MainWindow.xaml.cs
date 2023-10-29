@@ -16,9 +16,9 @@ namespace MemoryUI
     public partial class MainWindow : Window
     {
         private Game game = new Game();
-        private CardText firstFlipped = null;
-        private CardText secondFlipped = null;
-        private HashSet<CardText> matchedCards = new HashSet<CardText>();              
+        private CardBase firstFlipped = null;
+        private CardBase secondFlipped = null;
+        private HashSet<CardBase> matchedCards = new HashSet<CardBase>();              
         private TextBlock gameMessage = new TextBlock();
         private ButtonUI resetGameBtn;
         private ButtonUI scoreTabBtn;
@@ -174,7 +174,7 @@ namespace MemoryUI
 
         private void CardClicked(object sender, MouseButtonEventArgs e)
         {
-            CardText clickedCard = e.Source as CardText;
+            CardBase clickedCard = e.Source as CardBase;
 
             if (clickedCard == null || clickedCard.IsFlipped)
             {
@@ -184,7 +184,7 @@ namespace MemoryUI
             CardProcessing(clickedCard);
         }
 
-        private void CardProcessing(CardText clickedCard)
+        private void CardProcessing(CardBase clickedCard)
         {
             if (firstFlipped == null)
             {
