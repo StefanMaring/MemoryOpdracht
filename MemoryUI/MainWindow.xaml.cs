@@ -228,13 +228,19 @@ namespace MemoryUI
                     gameMessage.Foreground = new SolidColorBrush(Colors.Red);
                     gameMessage.Text = "Geen match!";
 
-                    firstFlipped.Icon.Visibility = Visibility.Hidden;
-                    firstFlipped.IsFlipped = false;
-                    firstFlipped = null;
-
-                    secondFlipped.Icon.Visibility = Visibility.Hidden;
-                    secondFlipped.IsFlipped = false;
-                    secondFlipped = null;
+                    DispatcherTimer timer = new DispatcherTimer();
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += (s, e) =>
+                    {
+                        firstFlipped.Icon.Visibility = Visibility.Hidden;
+                        firstFlipped.IsFlipped = false;
+                        secondFlipped.Icon.Visibility = Visibility.Hidden;
+                        secondFlipped.IsFlipped = false;
+                        firstFlipped = null;
+                        secondFlipped = null;
+                        timer.Stop();
+                    };
+                    timer.Start();
                 }
             }
         }
