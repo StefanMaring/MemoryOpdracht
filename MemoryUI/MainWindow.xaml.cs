@@ -229,7 +229,7 @@ namespace MemoryUI
                     gameMessage.Text = "Geen match!";
 
                     DispatcherTimer flipTimer = new DispatcherTimer();
-                    flipTimer.Interval = TimeSpan.FromSeconds(1);
+                    flipTimer.Interval = TimeSpan.FromSeconds(0.5);
                     flipTimer.Tick += (s, e) =>
                     {
                         firstFlipped.Icon.Visibility = Visibility.Hidden;
