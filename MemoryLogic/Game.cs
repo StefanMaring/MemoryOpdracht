@@ -110,7 +110,7 @@ namespace MemoryLogic
             return shuffledValues;
         }
 
-        private void CreateCards(int amountOfCards) {
+        public void CreateCards(int amountOfCards) {
             string[] cardValues = ShuffleCardValues(CreateCardValues(amountOfCards));
 
             for(int i = 0; i < amountOfCards; i++)
