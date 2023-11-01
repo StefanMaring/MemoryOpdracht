@@ -43,20 +43,19 @@ namespace MemoryLogicTests
             Assert.That(expectedResult, Is.EqualTo(amount));
         }
 
-        //[TestCase(8)]
-        //[TestCase(10)]
-        //[TestCase(12)]
-        //[TestCase(20)]
-        //public void CreateCards_HasCreatedCorrectCardAmount(int amount) { 
-        //    Game game = new Game();
-        //    game.CreateCards(amount);
+        [TestCase(8)]
+        [TestCase(10)]
+        [TestCase(12)]
+        [TestCase(20)]
+        public void CreateCards_HasCreatedCorrectCardAmount(int amount)
+        {
+            Game game = new Game();
+            game.CreateCards(amount);
 
-        //    List<Card> gameCards = game.GameCards;
+            int expectedResult = game.GameCards.Count;
 
-        //    int expectedResult = gameCards.Count;
-
-        //    Assert.That(expectedResult, Is.EqualTo(amount));
-        //}
+            Assert.That(expectedResult, Is.EqualTo(amount));
+        }
 
         [TestCase(10,20,5,1000.0)]
         [TestCase(4,20,2,400.0)]

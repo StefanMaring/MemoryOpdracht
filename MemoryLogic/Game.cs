@@ -12,6 +12,7 @@ namespace MemoryLogic
         private int amountOfCards;
         private List<Card> gameCards = new List<Card>();
         public int AmountOfCards { get; set; }
+        public List<Card> GameCards { get { return gameCards; } }
 
         public Game() { 
         
