@@ -19,25 +19,22 @@ namespace MemoryData
             AmountOfCards = amountOfCards;
         }
 
-        public bool WriteDataToJSON()
+        public void WriteDataToJSON()
         {
             string newScore;
 
-            if(File.Exists(filePath))
-            {
-                string existingScores = File.ReadAllText(filePath);
-                List<Data> scoreList = JsonConvert.DeserializeObject<List<Data>>(existingScores);
+            if(File.Exists(filePath) == false) {
 
-                scoreList.Add(this);
-
-                newScore = JsonConvert.SerializeObject(scoreList);
-                File.WriteAllText(filePath, newScore);
-                return true;
-            } else
-            {
-                Trace.WriteLine("File does not exist!");
-                return false;
+                File.AppendAllText("highscores.json", "[\n]");
             }
+
+            string existingScores = File.ReadAllText(filePath);
+            List<Data> scoreList = JsonConvert.DeserializeObject<List<Data>>(existingScores);
+
+            scoreList.Add(this);
+
+            newScore = JsonConvert.SerializeObject(scoreList);
+            File.WriteAllText(filePath, newScore);
         }
     }
 }

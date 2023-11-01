@@ -53,6 +53,11 @@ namespace MemoryUI
                         this.Close();
                     } else
                     {
+                        if(!Directory.Exists(imageFilePath))
+                        {
+                            Directory.CreateDirectory(imageFilePath);
+                        }
+
                         if(!Directory.EnumerateFiles(imageFilePath).Any())
                         {
                             MessageBox.Text = "Geen foto's geüpload!";
@@ -89,6 +94,11 @@ namespace MemoryUI
             {
                 foreach (string imageFile in fileDialog.FileNames) {
                     images.Add(imageFile);
+                }
+
+                if (!Directory.Exists(imageFilePath))
+                {
+                    Directory.CreateDirectory(imageFilePath);
                 }
 
                 SaveImagesToDirectory(images, imageFilePath);

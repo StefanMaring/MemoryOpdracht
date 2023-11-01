@@ -58,7 +58,15 @@ namespace MemoryLogicTests
         //    Assert.That(expectedResult, Is.EqualTo(amount));
         //}
 
-        //test for card matching
-        //score calculator test
+        [TestCase(10,20,5,1000.0)]
+        [TestCase(4,20,2,400.0)]
+        [TestCase(4,10,2,800.0)]
+        [TestCase(4,10,3,534.0)]
+        public void CalculateScore(int amountOfCards, int timeTillCompletion, int turnAmount, double expectedScore) {
+            ScoreCalculator sc = new ScoreCalculator(amountOfCards, timeTillCompletion, turnAmount);
+            double actualScore = sc.CalculateScore();
+
+            Assert.That(expectedScore, Is.EqualTo(actualScore));
+        }
     }
 }
