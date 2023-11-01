@@ -9,6 +9,8 @@ namespace MemoryUI
 {
     public partial class HighscoreWindow : Window
     {
+        private const string filePath = "highscores.json";
+
         public HighscoreWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -20,7 +22,7 @@ namespace MemoryUI
         public void DisplayScores()
         {
             DataReader dr = new DataReader();
-            List<Data> scores = dr.ReadDataFromJSON();
+            List<Data> scores = dr.ReadDataFromJSON(filePath);
             var orderedScores = (from Data data in scores
                                 orderby data.Score descending
                                 select data).Take(10);

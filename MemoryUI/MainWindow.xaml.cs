@@ -28,6 +28,7 @@ namespace MemoryUI
         private int turnAmount = 0;
 
         private const string directoryPath = "cardImages/";
+        private const string filePath = "highscores.json";
 
         public int AmountOfCards { get; set; }
         public string PlayerName { get; set; }
@@ -257,7 +258,7 @@ namespace MemoryUI
                 gameMessage.Foreground = new SolidColorBrush(Colors.Black);
 
                 DataWriter dw = new DataWriter(PlayerName, sc.CalculateScore(), AmountOfCards);
-                dw.WriteDataToJSON();
+                dw.WriteDataToJSON(filePath);
             }
         }
 

@@ -11,21 +11,19 @@ namespace MemoryData
 {
     public class DataWriter : Data
     {
-        private const string filePath = "highscores.json";
-
         public DataWriter(string playerName, double score, int amountOfCards) { 
             PlayerName = playerName;
             Score = score;
             AmountOfCards = amountOfCards;
         }
 
-        public void WriteDataToJSON()
+        public void WriteDataToJSON(string filePath)
         {
             string newScore;
 
             if(!File.Exists(filePath)) {
 
-                File.AppendAllText("highscores.json", "[\n]");
+                File.AppendAllText(filePath, "[\n]");
             }
 
             string existingScores = File.ReadAllText(filePath);

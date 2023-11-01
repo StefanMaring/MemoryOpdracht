@@ -10,13 +10,7 @@ namespace MemoryData
 {
     public class DataReader : Data
     {
-        private const string filePath = "highscores.json";
-
-        public DataReader() { 
-
-        }
-
-        public List<Data> ReadDataFromJSON()
+        public List<Data> ReadDataFromJSON(string filePath)
         {
             List<Data> allScores = new List<Data>();
 
