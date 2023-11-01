@@ -190,7 +190,6 @@ namespace MemoryUI
 
             if (clickedCard == null || clickedCard.IsFlipped)
             {
-                gameMessage.Text = "Kaart is al omgedraaid!";
                 return;
             }
 
