@@ -23,7 +23,7 @@ namespace MemoryData
         {
             string newScore;
 
-            if(File.Exists(filePath) == false) {
+            if(!File.Exists(filePath)) {
 
                 File.AppendAllText("highscores.json", "[\n]");
             }
