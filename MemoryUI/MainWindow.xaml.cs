@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -24,6 +25,7 @@ namespace MemoryUI
         private ButtonUI scoreTabBtn;
         private Stopwatch stopWatch = new Stopwatch();
         private DispatcherTimer timer = new DispatcherTimer();
+        private MainViewModel mainViewModel;
         private bool withImages;
         private int turnAmount = 0;
 
@@ -51,9 +53,11 @@ namespace MemoryUI
             InitializeComponent();
             SetupUI();
             DrawGame(AmountOfCards);
-            MainViewModel mainViewModel = new MainViewModel();
+
+            mainViewModel = new MainViewModel();
             mainViewModel.Cards = Cards;
-            //DataContext = mainViewModel;
+            mainViewModel.ColAmount = AmountOfCards / 2;
+            DataContext = mainViewModel;
 
             stopWatch.Start();
         }
@@ -111,15 +115,15 @@ namespace MemoryUI
             int valueIndex = 0;
             Cards = new List<CardBase>();
 
-            for (int i = 0; i < colCount; i++)
-            {
-                GameGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            }
+            //for (int i = 0; i < colCount; i++)
+            //{
+            //    GameGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            //}
 
-            for (int i = 0; i < rowCount; i++)
-            {
-                GameGrid.RowDefinitions.Add(new RowDefinition());
-            }
+            //for (int i = 0; i < rowCount; i++)
+            //{
+            //    GameGrid.RowDefinitions.Add(new RowDefinition());
+            //}
 
             for (int row = 0; row < rowCount; row++)
             {

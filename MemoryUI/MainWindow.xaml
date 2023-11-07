@@ -7,24 +7,23 @@
         mc:Ignorable="d"
         Title="Memory" Height="800" Width="900" ResizeMode="NoResize" d:DataContext="{d:DesignInstance Type=local:MainViewModel}">
     <StackPanel x:Name="MainContainer" Orientation="Vertical">
-        <Border BorderBrush="Black" BorderThickness="3">
-            <Grid x:Name="GameGrid">
-                <ItemsControl ItemsSource="{Binding Cards}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="6"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border
+        <Grid x:Name="GameGrid">
+            <ItemsControl ItemsSource="{Binding Cards}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid x:Name="UniGrid" Columns="{Binding ColAmount}"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border
                              Background="{Binding Background}"                              
                              Margin="{Binding Margin}" 
                              Height="{Binding Height}" 
                              Width="{Binding Width}" 
                              Cursor="Hand" 
                              MouseLeftButtonDown="CardClicked">
-                                <TextBlock 
+                            <TextBlock 
                                 Text="{Binding Icon.Text}"                                         
                                 Background="{Binding Icon.Background}" 
                                 Height="{Binding Icon.Height}" 
@@ -33,12 +32,11 @@
                                 Visibility="{Binding Icon.Visibility}"
                                 FontSize="42"
                                 TextAlignment="Center">
-                                </TextBlock>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Grid>
-        </Border>
+                            </TextBlock>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
     </StackPanel>
 </Window>

@@ -10,7 +10,9 @@ namespace MemoryUI
     public class MainViewModel : INotifyPropertyChanged
     {
         private List<CardBase> _cards;
-        private CardBase _card; 
+        private int colAmount;
+
+        public int ColAmount { get { return colAmount; } set { colAmount = value; } }
 
         public List<CardBase> Cards
         {
@@ -28,6 +30,5 @@ namespace MemoryUI
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }
