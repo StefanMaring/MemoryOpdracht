@@ -115,16 +115,6 @@ namespace MemoryUI
             int valueIndex = 0;
             Cards = new List<CardBase>();
 
-            //for (int i = 0; i < colCount; i++)
-            //{
-            //    GameGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            //}
-
-            //for (int i = 0; i < rowCount; i++)
-            //{
-            //    GameGrid.RowDefinitions.Add(new RowDefinition());
-            //}
-
             for (int row = 0; row < rowCount; row++)
             {
                 for (int col = 0; col < colCount; col++)
@@ -153,10 +143,6 @@ namespace MemoryUI
                     valueIndex++;
 
                     Cards.Add(card);
-
-                    //GameGrid.Children.Add(card);
-                    Grid.SetRow(card, row);
-                    Grid.SetColumn(card, col);
                 }
             }
         }

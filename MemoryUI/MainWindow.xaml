@@ -11,7 +11,7 @@
             <ItemsControl ItemsSource="{Binding Cards}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid x:Name="UniGrid" Columns="{Binding ColAmount}"/>
+                        <UniformGrid Columns="{Binding ColAmount}"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
