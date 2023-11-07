@@ -32,6 +32,7 @@ namespace MemoryUI
 
         public int AmountOfCards { get; set; }
         public string PlayerName { get; set; }
+        public List<CardBase> Cards {  get; set; }
 
         public MainWindow(int amountOfCards, string playerName, bool withImages)
         {             
@@ -46,11 +47,44 @@ namespace MemoryUI
             game.DetermineAmountOfCards(amountOfCards);
             AmountOfCards = game.AmountOfCards;
             PlayerName = playerName;
-
-            DrawGame(AmountOfCards);
+                     
             InitializeComponent();
-            
+            SetupUI();
+            DrawGame(AmountOfCards);
+            MainViewModel mainViewModel = new MainViewModel();
+            mainViewModel.Cards = Cards;
+            //DataContext = mainViewModel;
+
             stopWatch.Start();
+        }
+
+        private void SetupUI()
+        {
+            gameMessage.Background = new SolidColorBrush(Colors.White);
+            gameMessage.Foreground = new SolidColorBrush(Colors.Black);
+            gameMessage.HorizontalAlignment = HorizontalAlignment.Left;
+            gameMessage.Margin = new Thickness(5, 5, 5, 5);
+            gameMessage.FontSize = 16;
+            gameMessage.Text = $"Welkom bij Memory, {PlayerName}!";
+
+            ButtonUI btn1 = new ButtonUI();
+            resetGameBtn = btn1.CreateButton("ResetGameButton", "Reset", HorizontalAlignment.Left);
+            resetGameBtn.Click += ResetGameBtn_Click;
+
+            ButtonUI btn2 = new ButtonUI();
+            scoreTabBtn = btn2.CreateButton("ScoreTabButton", "Highscores", HorizontalAlignment.Right);
+            scoreTabBtn.Click += ScoreTabBtn_Click;
+
+            DockPanel btnPanel = new DockPanel();
+            btnPanel.HorizontalAlignment = HorizontalAlignment.Right;
+            btnPanel.Children.Add(resetGameBtn);
+            btnPanel.Children.Add(scoreTabBtn);
+
+            DockPanel topPanel = new DockPanel();
+            topPanel.Children.Add(gameMessage);
+            topPanel.Children.Add(btnPanel);
+
+            MainContainer.Children.Insert(0, topPanel);
         }
 
         private void DrawGame(int cardAmount)
@@ -75,17 +109,16 @@ namespace MemoryUI
             }
             
             int valueIndex = 0;
-
-            Grid grid = new Grid();
+            Cards = new List<CardBase>();
 
             for (int i = 0; i < colCount; i++)
             {
-                grid.ColumnDefinitions.Add(new ColumnDefinition());
+                GameGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
             for (int i = 0; i < rowCount; i++)
             {
-                grid.RowDefinitions.Add(new RowDefinition());
+                GameGrid.RowDefinitions.Add(new RowDefinition());
             }
 
             for (int row = 0; row < rowCount; row++)
@@ -115,42 +148,14 @@ namespace MemoryUI
                     card.MouseLeftButtonDown += CardClicked; //event
                     valueIndex++;
 
-                    grid.Children.Add(card);
+                    Cards.Add(card);
+
+                    //GameGrid.Children.Add(card);
                     Grid.SetRow(card, row);
-                    Grid.SetColumn(card, col);                                                      
+                    Grid.SetColumn(card, col);
                 }
             }
-
-            gameMessage.Background = new SolidColorBrush(Colors.White);
-            gameMessage.Foreground = new SolidColorBrush(Colors.Black);
-            gameMessage.HorizontalAlignment = HorizontalAlignment.Left;
-            gameMessage.Margin = new Thickness(5,5,5,5);
-            gameMessage.FontSize = 16;
-            gameMessage.Text = $"Welkom bij Memory, {PlayerName}!";
-
-            ButtonUI btn1 = new ButtonUI();
-            resetGameBtn = btn1.CreateButton("ResetGameButton", "Reset", HorizontalAlignment.Left);
-            resetGameBtn.Click += ResetGameBtn_Click;
-
-            ButtonUI btn2 = new ButtonUI();
-            scoreTabBtn = btn2.CreateButton("ScoreTabButton", "Highscores", HorizontalAlignment.Right);
-            scoreTabBtn.Click += ScoreTabBtn_Click;
-                         
-            DockPanel btnPanel = new DockPanel();
-            btnPanel.HorizontalAlignment = HorizontalAlignment.Right;       
-            btnPanel.Children.Add(resetGameBtn); 
-            btnPanel.Children.Add(scoreTabBtn);
-
-            DockPanel topPanel = new DockPanel();
-            topPanel.Children.Add(gameMessage);
-            topPanel.Children.Add(btnPanel);
-
-            StackPanel panel = new StackPanel();
-            panel.Children.Add(topPanel);
-            panel.Children.Add(grid);
-
-            AddChild(panel);
-        }        
+        }
 
         private TextBlock CreateTextBlock()
         {
