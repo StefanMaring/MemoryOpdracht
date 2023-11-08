@@ -2,6 +2,7 @@
 using MemoryLogic;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace MemoryUI
 
         public int AmountOfCards { get; set; }
         public string PlayerName { get; set; }
-        public List<CardBase> Cards {  get; set; }
+        public ObservableCollection<CardBase> Cards {  get; set; }
 
         public MainWindow(int amountOfCards, string playerName, bool withImages)
         {             
@@ -113,7 +114,7 @@ namespace MemoryUI
             }
             
             int valueIndex = 0;
-            Cards = new List<CardBase>();
+            Cards = new ObservableCollection<CardBase>();
 
             for (int row = 0; row < rowCount; row++)
             {
